@@ -31,14 +31,31 @@ jobs:
         run: |
           python scraper.py
 
-      - name: Push updated README
+      - name: Update README.md via GitHub API
         env:
           GH_TOKEN: ${{ secrets.GITHUBTOKEN }}
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
-          git add README.md
-          git commit -m "Update README with latest Android reports [bot]" || echo "No changes to commit"
-          git push
-
+          # Create the new content
+          echo "# 📱 Android Vulnerability Summary" > new_readme.md
+          cat android-reports.md >> new_readme.md
+      
+          # Encode content to Base64
+          ENCODED_CONTENT=$(base64 -w 0 new_readme.md)
+      
+          # Get current SHA of README.md
+          SHA=$(curl -s -H "Authorization: token $GH_TOKEN" \
+            https://api.github.com/repos/${{ github.repository }}/contents/README.md \
+            | jq -r .sha)
+      
+          # Update README.md
+          curl -X PUT -H "Authorization: token $GH_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d @- https://api.github.com/repos/${{ github.repository }}/contents/README.md <<EOF
+          {
+            "message": "Update README with latest Android reports",
+            "content": "${ENCODED_CONTENT}",
+            "sha": "${SHA}"
+          }
+      EOF
+      
+      

@@ -31,10 +31,14 @@ jobs:
         run: |
           python scraper.py
 
-      - name: Commit updated markdown
+      - name: Push updated README
+        env:
+          GH_TOKEN: ${{ secrets.GITHUBTOKEN }}
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add android-reports.md
-          git commit -m "Update Android report summary [bot]" || echo "No changes to commit"
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
+          git add README.md
+          git commit -m "Update README with latest Android reports [bot]" || echo "No changes to commit"
           git push
+

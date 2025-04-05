@@ -26,13 +26,26 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable jq
 
-      - name: Run Scraper
+      - name: Run scraper
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         run: |
-          python scraper.py
+          python scraper.py  # Should generate android-reports.md
+
+      - name: Load previous reports
+        run: |
+          cp android-reports.md old-android-reports.md || echo "" > old-android-reports.md
+
+      - name: Compare and find new vulns
+        id: check_new
+        run: |
+          sort old-android-reports.md > old_sorted.md
+          sort android-reports.md > new_sorted.md
+          comm -13 old_sorted.md new_sorted.md > new-vulns.txt
+          echo "new_count=$(wc -l < new-vulns.txt)" >> $GITHUB_OUTPUT
 
       - name: Update README.md via GitHub API
+        if: steps.check_new.outputs.new_count != '0'
         env:
           GH_TOKEN: ${{ secrets.GITHUBTOKEN }}
         run: |
@@ -40,15 +53,40 @@ jobs:
           cat android-reports.md >> new_readme.md
 
           ENCODED_CONTENT=$(base64 -w 0 new_readme.md)
-
           SHA=$(curl -s -H "Authorization: token $GH_TOKEN" \
             https://api.github.com/repos/${GITHUB_REPOSITORY}/contents/README.md \
             | jq -r .sha)
 
           curl -X PUT -H "Authorization: token $GH_TOKEN" \
             -H "Content-Type: application/json" \
-            -d "$(jq -n --arg msg "Update README with latest Android reports" \
-                         --arg content "$ENCODED_CONTENT" \
-                         --arg sha "$SHA" \
-                         '{message: $msg, content: $content, sha: $sha}')" \
+            -d "$(jq -n --arg msg 'Update README with latest Android reports' \
+                           --arg content "$ENCODED_CONTENT" \
+                           --arg sha "$SHA" \
+                           '{message: $msg, content: $content, sha: $sha}')" \
             https://api.github.com/repos/${GITHUB_REPOSITORY}/contents/README.md
+
+      - name: Set env var for Slack message
+        if: steps.check_new.outputs.new_count != '0'
+        run: |
+          echo "message=*📱 New Android Vulnerabilities on HackerOne:*\n$(cat new-vulns.txt | sed 's/^/- /')" >> $GITHUB_ENV
+
+      - name: Post blocks to a Slack channel
+        if: steps.check_new.outputs.new_count != '0'
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SECURITY_SLACK_BOT_TOKEN }}
+          payload: |
+            {
+              "channel": "${{ secrets.WEBHOOK_URL }}",
+              "text": "New Android HackerOne Vulnerabilities Detected",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "${{ env.message }}"
+                  }
+                }
+              ]
+            }

@@ -8,6 +8,7 @@ on:
 jobs:
   scrape:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
 
@@ -20,10 +21,10 @@ jobs:
         run: |
           pip install selenium webdriver-manager beautifulsoup4 requests pandas
 
-      - name: Install Chrome
+      - name: Install Chrome and jq
         run: |
           sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
+          sudo apt-get install -y google-chrome-stable jq
 
       - name: Run Scraper
         env:
@@ -35,27 +36,19 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUBTOKEN }}
         run: |
-          # Create the new content
           echo "# 📱 Android Vulnerability Summary" > new_readme.md
           cat android-reports.md >> new_readme.md
-      
-          # Encode content to Base64
+
           ENCODED_CONTENT=$(base64 -w 0 new_readme.md)
-      
-          # Get current SHA of README.md
+
           SHA=$(curl -s -H "Authorization: token $GH_TOKEN" \
-            https://api.github.com/repos/${{ github.repository }}/contents/README.md \
+            https://api.github.com/repos/${GITHUB_REPOSITORY}/contents/README.md \
             | jq -r .sha)
-      
-          # Update README.md
+
           curl -X PUT -H "Authorization: token $GH_TOKEN" \
             -H "Content-Type: application/json" \
-            -d @- https://api.github.com/repos/${{ github.repository }}/contents/README.md <<EOF
-          {
-            "message": "Update README with latest Android reports",
-            "content": "${ENCODED_CONTENT}",
-            "sha": "${SHA}"
-          }
-          EOF
-      
-      
+            -d "$(jq -n --arg msg "Update README with latest Android reports" \
+                         --arg content "$ENCODED_CONTENT" \
+                         --arg sha "$SHA" \
+                         '{message: $msg, content: $content, sha: $sha}')" \
+            https://api.github.com/repos/${GITHUB_REPOSITORY}/contents/README.md

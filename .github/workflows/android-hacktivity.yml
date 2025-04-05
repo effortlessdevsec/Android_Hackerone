@@ -56,6 +56,6 @@ jobs:
             "content": "${ENCODED_CONTENT}",
             "sha": "${SHA}"
           }
-      EOF
+          EOF
       
       

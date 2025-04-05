@@ -5,7 +5,6 @@ _Generated on 2025-04-05 18:00:21_
 
 | # | Title | Severity | Date | Program | URL |
 |---|-------|----------|------|---------|-----|
-| 1 | Brave Android: Incorrect URL Eliding in Brave Shields Pop Up | Low | September 18, 2024 16:10:44 UTC | Brave Software | [Link](https://hackerone.com/reports/2501378) |
 | 2 | MetaMask Browser (on Android) does not enforce Content-Security-Policy header | Medium | August 27, 2024 15:02:23 UTC | MetaMask | [Link](https://hackerone.com/reports/1941767) |
 | 3 | Path traversal in deeplink query parameter can expose any user's private info to a public directory (one click) | Medium | July 9, 2024 11:01:19 UTC | Basecamp | [Link](https://hackerone.com/reports/2553411) |
 | 4 | Navgraph confusion allows any 3p app to send and read requests from the server at app.hey.com | Medium | July 9, 2024 11:01:04 UTC | Basecamp | [Link](https://hackerone.com/reports/2552879) |

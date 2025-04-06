@@ -53,9 +53,9 @@ jobs:
             '{message: $msg, content: $content, branch: $branch}')
         fi
 
-        # Upload file via GitHub API
+        # Upload file via GitHub API (✅ Correct endpoint)
         curl -X PUT \
           -H "Authorization: token $GH_TOKEN" \
           -H "Content-Type: application/json" \
           -d "$JSON" \
-          https://api.github.com
+          "https://api.github.com/repos/$REPO/contents/$FILE_PATH"

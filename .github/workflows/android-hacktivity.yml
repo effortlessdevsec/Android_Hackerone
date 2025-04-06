@@ -45,6 +45,7 @@ jobs:
           echo "File found, downloading..."
           DOWNLOAD_URL=$(echo "$RESPONSE" | jq -r .download_url)
           curl -s -L $DOWNLOAD_URL -o $FILE_PATH
+          mv android-reports.json old-android-reports.json
         else
           echo "File not found, proceeding without android-report.json."
         fi
@@ -52,6 +53,38 @@ jobs:
     - name: 🕷️ Run Scraper
       run: |
         python scrape.py
+
+    - name: 📊 Compare with Existing Data and Check for New Vulnerabilities
+      id: compare
+      run: |
+          # Compare newly scraped vulnerabilities with the json data
+          if [ -f android-reports.json ] && [ -f old-android-reports.json ]; then
+            # Compare both files for differences and extract new vulnerabilities
+            new_vulnerabilities=$(jq -s '.[0] - .[1]' android-reports.json old-android-reports.json)
+  
+            # If there are any new vulnerabilities, send them to Slack
+            if [ "$(echo "$new_vulnerabilities" | jq length)" -gt 0 ]; then
+              echo "new_data=true" >> $GITHUB_OUTPUT
+              echo "$new_vulnerabilities" > new-found.json
+            else
+              echo "new_data=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "new_data=false" >> $GITHUB_OUTPUT
+          fi
+
+    - name: 🔔 Send Slack Notification if New Vulnerabilities Found
+      if: steps.compare.outputs.new_data == 'true'
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      run: |
+        NEW_VULNERABILITIES=$(cat new-found.json)
+        COUNT=$(echo "$NEW_VULNERABILITIES" | jq length)
+        MESSAGE="📱 *$COUNT* new Android vulnerability disclosures found on HackerOne!\n➡️ Check reports: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        curl -X POST -H 'Content-type: application/json' \
+          --data "{\"text\":\"$MESSAGE\"}" \
+          "$SLACK_WEBHOOK_URL"
+
 
     - name: 💾 Commit updated android-report.json to main branch using GitHub API
       env:
@@ -88,40 +121,11 @@ jobs:
           -d "$JSON" \
           https://api.github.com/repos/$REPO/contents/$FILE_PATH
 
-    - name: 📊 Compare with Existing Data and Check for New Vulnerabilities
-      id: compare
-      run: |
-        # Compare newly scraped vulnerabilities with the json data
-        if [ -f android-report.json ]; then
-          # Assuming the `scrape.py` adds vulnerabilities to the json file (e.g., `new_reports`)
-          new_reports_count=$(jq '.new_reports | length' android-report.json)
-          echo "New vulnerabilities found: $new_reports_count"
-
-          if [ "$new_reports_count" -gt 0 ]; then
-            echo "new_data=true" >> $GITHUB_OUTPUT
-            echo "$new_reports_count" > new-found.flag
-          else
-            echo "new_data=false" >> $GITHUB_OUTPUT
-          fi
-        else
-          echo "new_data=false" >> $GITHUB_OUTPUT
-        fi
-
-    - name: 🔔 Send Slack Notification if New Vulnerabilities Found
-      if: steps.compare.outputs.new_data == 'true'
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      run: |
-        COUNT=$(cat new-found.flag)
-        MESSAGE="📱 *$COUNT* new Android vulnerability disclosures found on HackerOne!\n➡️ Check reports: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-        curl -X POST -H 'Content-type: application/json' \
-          --data "{\"text\":\"$MESSAGE\"}" \
-          "$SLACK_WEBHOOK_URL"
-
+    
     - name: 📜 Update README.md with Latest Report Information
       run: |
         DATE=$(date '+%Y-%m-%d')
-        NEW_REPORT_COUNT=$(jq '.new_reports | length' android-report.json)
+        NEW_REPORT_COUNT=$(jq '.new_reports | length' android-reports.json)
         
         # Update README.md with the latest report information
         echo "## Android HackerOne Reports as of $DATE" >> README.md

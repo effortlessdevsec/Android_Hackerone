@@ -95,17 +95,24 @@ jobs:
         for FILE in android-reports.json README.md; do
           BASE64_CONTENT=$(base64 -w 0 "$FILE")
           COMMIT_MSG="Update $FILE on $(date)"
-    
+          
+          # Fetch SHA if file exists
           SHA=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-            https://api.github.com/repos/$REPO/contents/$FILE?ref=$BRANCH | jq -r .sha)
+            "https://api.github.com/repos/$REPO/contents/$FILE?ref=$BRANCH" | jq -r .sha)
     
-          curl -s -X PUT https://api.github.com/repos/$REPO/contents/$FILE \
+          # Create JSON payload safely and upload
+          curl -s -X PUT "https://api.github.com/repos/$REPO/contents/$FILE" \
             -H "Authorization: token $GITHUB_TOKEN" \
             -H "Content-Type: application/json" \
-            -d @- <<EOF {
-        "message": "$COMMIT_MSG",
-        "content": "$BASE64_CONTENT",
-        "branch": "$BRANCH",
-        "sha": "$SHA" }
-        EOF
-            done
+            -d "$(jq -n \
+              --arg msg "$COMMIT_MSG" \
+              --arg content "$BASE64_CONTENT" \
+              --arg branch "$BRANCH" \
+              --arg sha "$SHA" \
+              '{
+                message: $msg,
+                content: $content,
+                branch: $branch,
+                sha: ($sha | select(. != "null"))
+              }')"
+        done

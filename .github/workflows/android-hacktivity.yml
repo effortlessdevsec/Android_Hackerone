@@ -97,13 +97,13 @@ jobs:
 
     - name: Post blocks to a Slack channel
       run: |
-        # Read new-found.json
-        NEW_VULNERABILITIES=$(cat new-found.json)
+        # Read new-found.json and escape special characters
+        NEW_VULNERABILITIES=$(cat new-found.json | jq -c .)
 
         # Send the raw JSON data directly to Slack as the attachment
         curl -X POST -H 'Content-type: application/json' --data "{
-          \"text\": \"*New Android vulnerability reports*\",\n
-          \"attachments\": [$NEW_VULNERABILITIES]
+          \"text\": \"*New Android vulnerability reports*\",
+          \"attachments\": $NEW_VULNERABILITIES
         }" ${{ secrets.WEBHOOK_URL }}
 
     

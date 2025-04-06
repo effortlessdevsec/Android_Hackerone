@@ -13,5 +13,11 @@ jobs:
     steps:
     - name: Post blocks to a Slack channel
       run: |
-        curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' \
+        curl -X POST -H 'Content-type: application/json' --data '{
+          "title": "MetaMask Browser (on Android) does not enforce Content-Security-Policy header",
+          "severity": "Medium",
+          "date": "August 27, 2024 15:02:23 UTC",
+          "program": "MetaMask",
+          "url": "https://hackerone.com/reports/1941767"
+        }' \
         ${{ secrets.WEBHOOK_URL }}

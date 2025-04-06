@@ -116,3 +116,8 @@ jobs:
                 sha: ($sha | select(. != "null"))
               }')"
         done
+    - name: 📤 Upload Excel Artifact
+      uses: actions/upload-artifact@v4
+      with:
+          name: android-reports-excel
+          path: android-reports.xlsx

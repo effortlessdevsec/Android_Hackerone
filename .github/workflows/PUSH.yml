@@ -1,23 +1,42 @@
 - name: 📤 Upload sample-report.txt using curl
+  env:
+    GH_TOKEN: ${{ secrets.GH_PAT }}
   run: |
     FILE_PATH="sample-report.txt"
     REPO="effortlessdevsec/Android_Hackerone"
     BRANCH="main"
-    COMMIT_MSG="Add sample-report.txt via API"
-    TOKEN=${{ secrets.GH_PAT }}
+    COMMIT_MSG="📄 Add or update $FILE_PATH via API"
 
-    # Get file content in base64
-    ENCODED_CONTENT=$(base64 -w 0 $FILE_PATH)
+    # Encode file to base64
+    ENCODED_CONTENT=$(base64 -w 0 "$FILE_PATH")
 
-    # Create or update the file using GitHub API
+    # Get SHA if the file already exists
+    RESPONSE=$(curl -s -H "Authorization: token $GH_TOKEN" \
+      https://api.github.com/repos/$REPO/contents/$FILE_PATH?ref=$BRANCH)
+
+    SHA=$(echo "$RESPONSE" | jq -r .sha)
+
+    # Create JSON payload
+    if [ "$SHA" != "null" ]; then
+      echo "File exists. Updating..."
+      JSON=$(jq -n \
+        --arg msg "$COMMIT_MSG" \
+        --arg content "$ENCODED_CONTENT" \
+        --arg branch "$BRANCH" \
+        --arg sha "$SHA" \
+        '{message: $msg, content: $content, branch: $branch, sha: $sha}')
+    else
+      echo "File does not exist. Creating..."
+      JSON=$(jq -n \
+        --arg msg "$COMMIT_MSG" \
+        --arg content "$ENCODED_CONTENT" \
+        --arg branch "$BRANCH" \
+        '{message: $msg, content: $content, branch: $branch}')
+    fi
+
+    # Upload the file
     curl -X PUT \
-      -H "Authorization: token $TOKEN" \
+      -H "Authorization: token $GH_TOKEN" \
       -H "Content-Type: application/json" \
-      -d @- \
-      https://api.github.com/repos/$REPO/contents/$FILE_PATH <<EOF
-{
-  "message": "$COMMIT_MSG",
-  "branch": "$BRANCH",
-  "content": "$ENCODED_CONTENT"
-}
-EOF
+      -d "$JSON" \
+      https://api.github.com/repos/$REPO/contents/$FILE_PATH

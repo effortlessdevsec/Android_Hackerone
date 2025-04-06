@@ -1,27 +1,23 @@
-name: 🚀 Sample Push Text File
+- name: 📤 Upload sample-report.txt using curl
+  run: |
+    FILE_PATH="sample-report.txt"
+    REPO="effortlessdevsec/Android_Hackerone"
+    BRANCH="main"
+    COMMIT_MSG="Add sample-report.txt via API"
+    TOKEN=${{ secrets.GH_PAT }}
 
-on:
-  workflow_dispatch:
+    # Get file content in base64
+    ENCODED_CONTENT=$(base64 -w 0 $FILE_PATH)
 
-jobs:
-  push-text-file:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: 📥 Checkout Repo
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
-    - name: 📝 Create Sample Text File
-      run: |
-        echo "This is a sample report generated on $(date)" > sample-report.txt
-
-    - name: 📦 Commit and Push to Branch
-      run: |
-        git config user.name "github-actions"
-        git config user.email "actions@github.com"
-        git checkout -b data-store || git switch data-store
-        git add sample-report.txt
-        git commit -m "📄 Add sample text file: $(date -u '+%Y-%m-%d %H:%M:%S')" || echo "Nothing to commit"
-        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:data-store
+    # Create or update the file using GitHub API
+    curl -X PUT \
+      -H "Authorization: token $TOKEN" \
+      -H "Content-Type: application/json" \
+      -d @- \
+      https://api.github.com/repos/$REPO/contents/$FILE_PATH <<EOF
+{
+  "message": "$COMMIT_MSG",
+  "branch": "$BRANCH",
+  "content": "$ENCODED_CONTENT"
+}
+EOF

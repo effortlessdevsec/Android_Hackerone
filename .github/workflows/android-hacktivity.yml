@@ -81,10 +81,27 @@ jobs:
       run: |
         NEW_VULNERABILITIES=$(cat new-found.json)
         COUNT=$(echo "$NEW_VULNERABILITIES" | jq length)
-        MESSAGE="📱 *$COUNT* new Android vulnerability disclosures found on HackerOne!\n➡️ Check reports: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+    
+        # Initialize the message
+        MESSAGE="📱 *$COUNT* new Android vulnerability disclosures found on HackerOne!%0A"
+    
+        # Loop through each new vulnerability and append details to the message
+        for row in $(echo "$NEW_VULNERABILITIES" | jq -r '.[] | @base64'); do
+            _title=$(echo $row | base64 --decode | jq -r '.title')
+            _program=$(echo $row | base64 --decode | jq -r '.program')
+            _url=$(echo $row | base64 --decode | jq -r '.url')
+            _severity=$(echo $row | base64 --decode | jq -r '.severity')
+            _date=$(echo $row | base64 --decode | jq -r '.date')
+            
+            # Format the message for each vulnerability
+            MESSAGE="$MESSAGE%0A*Title*: $_title%0A*Program*: $_program%0A*URL*: $_url%0A*Severity*: $_severity%0A*Date*: $_date%0A"
+        done
+    
+        # Send the message to Slack
         curl -X POST -H 'Content-type: application/json' \
           --data "{\"text\":\"$MESSAGE\"}" \
           "$SLACK_WEBHOOK_URL"
+
 
 
     - name: 💾 Commit updated android-report.json to main branch using GitHub API

@@ -32,7 +32,7 @@ jobs:
     - name: 📥 Fetch Existing android-report.json from main branch (if exists)
       run: |
         REPO="${{ github.repository }}"
-        FILE_PATH="android-report.json"
+        FILE_PATH="android-reports.json"
         BRANCH="main"  # Push to the main branch
 
         # Fetch file content from GitHub API
@@ -58,7 +58,7 @@ jobs:
         GIT_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         # Encode the JSON file to base64
-        BASE64_JSON=$(base64 -w 0 android-report.json)
+        BASE64_JSON=$(base64 -w 0 android-reports.json)
 
         COMMIT_MSG="📦 Update android-report.json: $(date '+%Y-%m-%d %H:%M:%S')"
         REPO="${{ github.repository }}"

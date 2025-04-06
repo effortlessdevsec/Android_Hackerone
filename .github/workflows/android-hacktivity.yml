@@ -84,6 +84,7 @@ jobs:
             if [ "$(echo "$new_vulnerabilities" | jq length)" -gt 0 ]; then
               echo "new_data=true" >> $GITHUB_OUTPUT
               echo "$new_vulnerabilities" > new-found.json
+              cat new-found.json
                echo "New vulnerabilities found and saved in new-found.json"
             else
               echo "new_data=false" >> $GITHUB_OUTPUT

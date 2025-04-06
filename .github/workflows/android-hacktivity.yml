@@ -26,22 +26,28 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable jq
 
-      - name: Run scraper
+      - name: Download previous artifact if exists
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: android-reports-json
+
+      - name: Rename old JSON if exists
+        run: |
+          mv android-reports.json old-android-reports.json || echo "{}" > old-android-reports.json
+
+      - name: Run scraper and save result
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         run: |
-          python scraper.py  # Should generate android-reports.md
-
-      - name: Load previous reports
-        run: |
-          cp android-reports.md old-android-reports.md || echo "" > old-android-reports.md
+          python scraper.py  # Creates android-reports.md and android-reports.json
 
       - name: Compare and find new vulns
         id: check_new
         run: |
-          sort old-android-reports.md > old_sorted.md
-          sort android-reports.md > new_sorted.md
-          comm -13 old_sorted.md new_sorted.md > new-vulns.txt
+          jq -c '.[]' old-android-reports.json | sort > old_sorted.txt
+          jq -c '.[]' android-reports.json | sort > new_sorted.txt
+          comm -13 old_sorted.txt new_sorted.txt > new-vulns.txt
           echo "new_count=$(wc -l < new-vulns.txt)" >> $GITHUB_OUTPUT
 
       - name: Update README.md via GitHub API
@@ -49,7 +55,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUBTOKEN }}
         run: |
-          echo "# 📱 Android Vulnerability Summary" > new_readme.md
+          echo "# \ud83d\udcf1 Android Vulnerability Summary" > new_readme.md
           cat android-reports.md >> new_readme.md
 
           ENCODED_CONTENT=$(base64 -w 0 new_readme.md)
@@ -68,17 +74,18 @@ jobs:
       - name: Set env var for Slack message
         if: steps.check_new.outputs.new_count != '0'
         run: |
-          echo "message=*📱 New Android Vulnerabilities on HackerOne:*\n$(cat new-vulns.txt | sed 's/^/- /')" >> $GITHUB_ENV
+          echo "message=*\ud83d\udcf1 New Android Vulnerabilities on HackerOne:*
+$(cat new-vulns.txt | sed 's/^/- /')" >> $GITHUB_ENV
 
-      - name: Post blocks to a Slack channel
+      - name: Post to Slack
         if: steps.check_new.outputs.new_count != '0'
         uses: slackapi/slack-github-action@v2.0.0
         with:
           method: chat.postMessage
-          token: ${{ secrets.SECURITY_SLACK_BOT_TOKEN }}
+          token: ${{ secrets.WEBHOOK_URL }}
           payload: |
             {
-              "channel": "${{ secrets.WEBHOOK_URL }}",
+          
               "text": "New Android HackerOne Vulnerabilities Detected",
               "blocks": [
                 {
@@ -90,3 +97,9 @@ jobs:
                 }
               ]
             }
+
+      - name: Upload latest JSON as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-reports-json
+          path: android-reports.json

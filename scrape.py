@@ -13,7 +13,6 @@ import shutil
 import time
 import pandas as pd
 import json
-import sqlite3
 
 
 class HackerOneScraper:
@@ -118,42 +117,36 @@ class HackerOneScraper:
 
         return results
 
-    def save_to_sqlite(self, data, db_path="android_reports.db"):
+    def save_to_json(self, data, filename="android-reports.json"):
         try:
-            conn = sqlite3.connect(db_path)
-            cursor = conn.cursor()
-
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS reports (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    title TEXT,
-                    severity TEXT,
-                    date TEXT,
-                    program TEXT,
-                    url TEXT UNIQUE
-                )
-            """)
-
-            for report in data:
-                try:
-                    cursor.execute("""
-                        INSERT OR IGNORE INTO reports (title, severity, date, program, url)
-                        VALUES (?, ?, ?, ?, ?)
-                    """, (
-                        report['title'],
-                        report['severity'],
-                        report['date'],
-                        report['program'],
-                        report['url']
-                    ))
-                except Exception as e:
-                    print(f"Error inserting report into DB: {e}")
-
-            conn.commit()
-            conn.close()
-            print(f"✅ Saved {len(data)} Android reports to SQLite DB '{db_path}'")
+            with open(filename, "w", encoding="utf-8") as jf:
+                json.dump(data, jf, indent=2)
+            print(f"✅ Saved {len(data)} Android reports to '{filename}'")
         except Exception as e:
-            print(f"❌ Failed to save to SQLite DB: {e}")
+            print(f"❌ Failed to save JSON file: {e}")
+
+    def save_to_markdown(self, data, filename="README.md"):
+        try:
+            markdown_lines = [
+                "# 📱 Disclosed Android Reports from HackerOne\n",
+                f"_Generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}_\n",
+                "| # | Title | Severity | Date | Program | URL |",
+                "|---|-------|----------|------|---------|-----|"
+            ]
+
+            for i, report in enumerate(data, 1):
+                title = report['title'].replace('|', ' ')
+                severity = report['severity']
+                date = report['date']
+                program = report['program'].replace('|', ' ')
+                url = report['url']
+                markdown_lines.append(f"| {i} | {title} | {severity} | {date} | {program} | [Link]({url}) |")
+
+            with open(filename, "w", encoding="utf-8") as f:
+                f.write("\n".join(markdown_lines))
+            print(f"✅ Saved {len(data)} Android reports to '{filename}'")
+        except Exception as e:
+            print(f"❌ Failed to save Markdown file: {e}")
 
     def scrape(self):
         print(f"Scraping HackerOne Hacktivity for Android reports - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
@@ -205,48 +198,11 @@ def main():
         print("No Android reports found or error occurred during scraping")
         return []
 
-    # Save markdown
-    markdown_lines = [
-        "# 📱 Disclosed Android Reports from HackerOne\n",
-        f"_Generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}_\n",
-        "| # | Title | Severity | Date | Program | URL |",
-        "|---|-------|----------|------|---------|-----|"
-    ]
-
-    for i, report in enumerate(results, 1):
-        title = report['title'].replace('|', ' ')
-        severity = report['severity']
-        date = report['date']
-        program = report['program'].replace('|', ' ')
-        url = report['url']
-        markdown_lines.append(f"| {i} | {title} | {severity} | {date} | {program} | [Link]({url}) |")
-
-    with open("android-reports.md", "w", encoding="utf-8") as f:
-        f.write("\n".join(markdown_lines))
-    print(f"✅ Saved {len(results)} Android reports to 'android-reports.md'")
-
-    # Save Excel
-    try:
-        df = pd.DataFrame(results)
-        df.index += 1
-        df.to_excel("android-reports.xlsx", index_label="No.")
-        print(f"✅ Saved {len(results)} Android reports to 'android-reports.xlsx'")
-    except Exception as e:
-        print(f"❌ Failed to save Excel file: {e}")
-
     # Save JSON
-    try:
-        with open("android-reports.json", "w", encoding="utf-8") as jf:
-            json.dump(results, jf, indent=2)
-        print(f"✅ Saved {len(results)} Android reports to 'android-reports.json'")
-    except Exception as e:
-        print(f"❌ Failed to save JSON file: {e}")
+    scraper.save_to_json(results)
 
-    # Save SQLite
-    try:
-        scraper.save_to_sqlite(results)
-    except Exception as e:
-        print(f"❌ Failed to save to SQLite: {e}")
+    # Save markdown
+    scraper.save_to_markdown(results)
 
     return results
 

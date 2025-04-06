@@ -12,6 +12,6 @@ jobs:
     steps:
 
     - name: Postd blocks to a Slack channel
-      if: always()
       run: |
-         curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' ${{secrets.WEBHOOK_URL)
+         curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' 
+                 ${{secrets.WEBHOOK_URL)

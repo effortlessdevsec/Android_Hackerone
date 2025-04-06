@@ -16,7 +16,7 @@ jobs:
       uses: slackapi/slack-github-action@v2.0.0
       with:
         method: chat.postMessage
-        token: ${{ secrets.SLACK_WEBHOOK_URL }}
+        token: ${{ secrets.WEBHOOK_URL}}
         payload: |
           {
             "channel": "${{ secrets.SECURITY_SLACK_CHANNEL_ID }}",
@@ -120,7 +120,7 @@ jobs:
       uses: slackapi/slack-github-action@v2.0.0
       with:
         method: chat.postMessage
-        token: ${{ secrets.SLACK_WEBHOOK_URL }}
+        token: ${{ secrets.WEBHOOK_URL}}
         payload: |
           {
             "channel": "${{ secrets.SECURITY_SLACK_CHANNEL_ID }}",

@@ -35,14 +35,14 @@ jobs:
 
     - name: 📥 Fetch Existing android-report.json from main branch (if exists)
       run: |
-        # Check if android-report.json exists in the repository
-        if [ -f android-report.json ]; then
+        # Check if android-reports.json exists in the repository
+        if [ -f android-reports.json ]; then
           # Rename the existing file to old-android-report.json
-          mv android-report.json old-android-report.json
+          mv android-reports.json old-android-reports.json
           echo "Renamed existing android-report.json to old-android-report.json"
         else
           # Print message if file is not found
-          echo "android-report.json file not found"
+          echo "android-reports.json file not found"
         fi
 
 

@@ -84,8 +84,7 @@ jobs:
     - name: Send Slack Notification
       run: |
         WEBHOOK_URL="${{ secrets.WEBHOOK_URL }}" ./slack_notify.sh
-
-
+      
     - name: 💾 Overwrite android-reports.json and README.md
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
@@ -104,10 +103,9 @@ jobs:
             -H "Authorization: token $GITHUB_TOKEN" \
             -H "Content-Type: application/json" \
             -d @- <<EOF {
-      "message": "$COMMIT_MSG",
-      "content": "$BASE64_CONTENT",
-      "branch": "$BRANCH",
-      "sha": "$SHA"
-    }
-    EOF
-        done
+        "message": "$COMMIT_MSG",
+        "content": "$BASE64_CONTENT",
+        "branch": "$BRANCH",
+        "sha": "$SHA" }
+        EOF
+            done

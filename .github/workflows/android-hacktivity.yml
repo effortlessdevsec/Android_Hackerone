@@ -36,6 +36,28 @@ jobs:
       with:
         fetch-depth: 0  # Needed to access all branches
 
+
+
+    - name: Post blocks to a Slack channelf
+      run: |
+            NEW_VULNERABILITIES=$(cat new-found.json | jq -c '[.[] | .[] | {
+            title: .title,
+            text: "Severity: \(.severity)\nProgram: \(.program)\nDate: \(.date)\n[View Report](\(.url))",
+            color: "warning" }]')
+            if [[ "$(echo "$NEW_VULNERABILITIES" | jq length)" -gt 0 ]]; then
+              # Slack webhook URL (replace with your actual webhook URL)
+            
+            
+              # Send the raw JSON data directly to Slack as the attachment
+              curl -X POST -H 'Content-type: application/json' --data "{
+                \"text\": \"*New Android vulnerability reports*\",
+                \"attachments\": $NEW_VULNERABILITIES
+              }" "${{secrets.WEBHOOK_URL}})"
+            else
+              echo "No new vulnerabilities found."
+            fi
+
+
     - name: 🐍 listing
       run: |
           ls

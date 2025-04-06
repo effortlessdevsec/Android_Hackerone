@@ -85,52 +85,82 @@ jobs:
       run: |
         WEBHOOK_URL="${{ secrets.WEBHOOK_URL }}" ./slack_notify.sh
 
-    - name: 💾 Commit updated android-report.json to main branch using GitHub API
+
+    - name: 💾 Commit updated android-report.json and README.md to main branch using GitHub API
       env:
         GIT_AUTH_TOKEN: ${{ secrets.GITHUBTOKEN }}
       run: |
-        BASE64_JSON=$(base64 -w 0 android-reports.json)
-        COMMIT_MSG="📦 Update android-report.json: $(date '+%Y-%m-%d %H:%M:%S')"
         REPO="${{ github.repository }}"
-        FILE_PATH="android-report.json"
         BRANCH="main"
     
-        # Fetch the SHA if the file exists
-        RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
-          https://api.github.com/repos/$REPO/contents/$FILE_PATH?ref=$BRANCH)
-        SHA=$(echo "$RESPONSE" | jq -r .sha)
+        ########## Update android-report.json ##########
+        FILE_PATH_JSON="android-report.json"
+        COMMIT_MSG_JSON="📦 Update android-report.json: $(date '+%Y-%m-%d %H:%M:%S')"
+        BASE64_JSON=$(base64 -w 0 android-reports.json)
     
-        echo "SHA: $SHA"
+        RESPONSE_JSON=$(curl -s -H "Authorization: token $GIT_AUTH_TOKEN" \
+          https://api.github.com/repos/$REPO/contents/$FILE_PATH_JSON?ref=$BRANCH)
+        SHA_JSON=$(echo "$RESPONSE_JSON" | jq -r .sha)
     
-        # Build the JSON payload
-        if [ "$SHA" != "null" ]; then
-          echo "📄 File exists. Updating it."
-          JSON=$(jq -n \
-            --arg msg "$COMMIT_MSG" \
+        if [ "$SHA_JSON" != "null" ]; then
+          echo "📄 android-report.json exists. Updating it."
+          JSON_PAYLOAD_JSON=$(jq -n \
+            --arg msg "$COMMIT_MSG_JSON" \
             --arg content "$BASE64_JSON" \
             --arg branch "$BRANCH" \
-            --arg sha "$SHA" \
+            --arg sha "$SHA_JSON" \
             '{message: $msg, content: $content, branch: $branch, sha: $sha}')
         else
-          echo "🆕 File not found. Creating new one."
-          JSON=$(jq -n \
-            --arg msg "$COMMIT_MSG" \
+          echo "🆕 android-report.json not found. Creating new one."
+          JSON_PAYLOAD_JSON=$(jq -n \
+            --arg msg "$COMMIT_MSG_JSON" \
             --arg content "$BASE64_JSON" \
             --arg branch "$BRANCH" \
             '{message: $msg, content: $content, branch: $branch}')
         fi
     
-        # Make the PUT request
-        curl -X PUT \
-          -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
+        curl -s -X PUT \
+          -H "Authorization: token $GIT_AUTH_TOKEN" \
           -H "Content-Type: application/json" \
-          -d "$JSON" \
-          https://api.github.com/repos/$REPO/contents/$FILE_PATH
-
-
-     
-
+          -d "$JSON_PAYLOAD_JSON" \
+          https://api.github.com/repos/$REPO/contents/$FILE_PATH_JSON
     
+        ########## Update README.md ##########
+        FILE_PATH_MD="README.md"
+        DATE=$(date '+%Y-%m-%d')
+        NEW_REPORT_COUNT=$(jq '.new_reports | length' android-reports.json)
+        README_CONTENT="## Android HackerOne Reports as of $DATE\n### New Vulnerabilities: $NEW_REPORT_COUNT\nDetails of the new vulnerabilities can be found in the [android-report.json](android-report.json).\n"
+        BASE64_MD=$(echo -e "$README_CONTENT" | base64 -w 0)
+        COMMIT_MSG_MD="📝 Update README.md: $DATE"
+    
+        RESPONSE_MD=$(curl -s -H "Authorization: token $GIT_AUTH_TOKEN" \
+          https://api.github.com/repos/$REPO/contents/$FILE_PATH_MD?ref=$BRANCH)
+        SHA_MD=$(echo "$RESPONSE_MD" | jq -r .sha)
+    
+        if [ "$SHA_MD" != "null" ]; then
+          echo "📄 README.md exists. Updating it."
+          JSON_PAYLOAD_MD=$(jq -n \
+            --arg msg "$COMMIT_MSG_MD" \
+            --arg content "$BASE64_MD" \
+            --arg branch "$BRANCH" \
+            --arg sha "$SHA_MD" \
+            '{message: $msg, content: $content, branch: $branch, sha: $sha}')
+        else
+          echo "🆕 README.md not found. Creating new one."
+          JSON_PAYLOAD_MD=$(jq -n \
+            --arg msg "$COMMIT_MSG_MD" \
+            --arg content "$BASE64_MD" \
+            --arg branch "$BRANCH" \
+            '{message: $msg, content: $content, branch: $branch}')
+        fi
+    
+        curl -s -X PUT \
+          -H "Authorization: token $GIT_AUTH_TOKEN" \
+          -H "Content-Type: application/json" \
+          -d "$JSON_PAYLOAD_MD" \
+          https://api.github.com/repos/$REPO/contents/$FILE_PATH_MD
+    
+       
     - name: 📜 Update README.md with Latest Report Information
       run: |
         DATE=$(date '+%Y-%m-%d')

@@ -32,7 +32,7 @@ jobs:
 
     - name: 📦 Install dependencies
       run: |
-        pip install selenium webdriver-manager beautifulsoup4 requests pandas
+        pip install selenium webdriver-manager beautifulsoup4 requests pandas openpyxl
 
     - name: 🧩 Install Chrome
       run: |

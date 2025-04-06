@@ -36,7 +36,7 @@ jobs:
         BRANCH="main"  # Push to the main branch
 
         # Fetch file content from GitHub API
-        RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+        RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
           https://api.github.com/repos/$REPO/contents/$FILE_PATH?ref=$BRANCH)
 
         SHA=$(echo "$RESPONSE" | jq -r .sha)
@@ -55,7 +55,7 @@ jobs:
 
     - name: 💾 Commit updated android-report.json to main branch using GitHub API
       env:
-        GIT_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GIT_AUTH_TOKEN: ${{ secrets.GITHUBTOKEN }}
       run: |
         # Encode the JSON file to base64
         BASE64_JSON=$(base64 -w 0 android-reports.json)
@@ -66,7 +66,7 @@ jobs:
         BRANCH="main"  # Use the main branch here
 
         # Fetch the SHA if the file already exists
-        RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+        RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
           https://api.github.com/repos/$REPO/contents/$FILE_PATH?ref=$BRANCH)
         SHA=$(echo "$RESPONSE" | jq -r .sha)
 
@@ -83,7 +83,7 @@ jobs:
           '{message: $msg, content: $content, branch: $branch}')
 
         curl -X PUT \
-          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
           -H "Content-Type: application/json" \
           -d "$JSON" \
           https://api.github.com/repos/$REPO/contents/$FILE_PATH

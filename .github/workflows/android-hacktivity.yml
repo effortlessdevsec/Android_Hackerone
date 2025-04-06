@@ -89,36 +89,46 @@ jobs:
       env:
         GIT_AUTH_TOKEN: ${{ secrets.GITHUBTOKEN }}
       run: |
-        # Encode the JSON file to base64
         BASE64_JSON=$(base64 -w 0 android-reports.json)
-
         COMMIT_MSG="📦 Update android-report.json: $(date '+%Y-%m-%d %H:%M:%S')"
         REPO="${{ github.repository }}"
         FILE_PATH="android-report.json"
-        BRANCH="main"  # Use the main branch here
-
-        # Fetch the SHA if the file already exists
+        BRANCH="main"
+    
+        # Fetch the SHA if the file exists
         RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
           https://api.github.com/repos/$REPO/contents/$FILE_PATH?ref=$BRANCH)
         SHA=$(echo "$RESPONSE" | jq -r .sha)
-
-        # If the file doesn't exist, create it
-        if [ "$SHA" == "null" ]; then
-          echo "File not found, creating new file."
+    
+        echo "SHA: $SHA"
+    
+        # Build the JSON payload
+        if [ "$SHA" != "null" ]; then
+          echo "📄 File exists. Updating it."
+          JSON=$(jq -n \
+            --arg msg "$COMMIT_MSG" \
+            --arg content "$BASE64_JSON" \
+            --arg branch "$BRANCH" \
+            --arg sha "$SHA" \
+            '{message: $msg, content: $content, branch: $branch, sha: $sha}')
+        else
+          echo "🆕 File not found. Creating new one."
+          JSON=$(jq -n \
+            --arg msg "$COMMIT_MSG" \
+            --arg content "$BASE64_JSON" \
+            --arg branch "$BRANCH" \
+            '{message: $msg, content: $content, branch: $branch}')
         fi
-
-        # Create the JSON payload for the GitHub API
-        JSON=$(jq -n \
-          --arg msg "$COMMIT_MSG" \
-          --arg content "$BASE64_JSON" \
-          --arg branch "$BRANCH" \
-          '{message: $msg, content: $content, branch: $branch}')
-
+    
+        # Make the PUT request
         curl -X PUT \
           -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
           -H "Content-Type: application/json" \
           -d "$JSON" \
           https://api.github.com/repos/$REPO/contents/$FILE_PATH
+
+
+     
 
     
     - name: 📜 Update README.md with Latest Report Information

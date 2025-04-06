@@ -15,21 +15,6 @@ jobs:
       with:
         fetch-depth: 0  # Needed to access all branches
 
-
-    - name: Test write
-      env:
-       GIT_AUTH_TOKEN: ${{ secrets.GITHUBTOKEN }}
-      run: |
-        git config --global user.email "actions@github.com"
-        git config --global user.name "GitHub Actions"
-        echo "Hello" > test.txt
-        git checkout -B data-store
-        git add test.txt
-        git commit -m "Test commit"
-        git remote set-url origin https://x-access-token:${GIT_AUTH_TOKEN}@github.com/${{ github.repository }}
-        git push origin data-store --force
-
-
     - name: 🐍 Set up Python
       uses: actions/setup-python@v5
       with:
@@ -44,10 +29,25 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y google-chrome-stable
 
-    - name: 📥 Fetch Existing SQLite DB from data-store branch
+    - name: 📥 Fetch Existing SQLite DB from dynamic branch using GitHub API
       run: |
-        git fetch origin data-store || echo "No data-store branch yet"
-        git checkout origin/data-store -- android_reports.db || echo "No existing DB file yet"
+        REPO="${{ github.repository }}"  # Get the repository dynamically
+        FILE_PATH="android_reports.db"
+        BRANCH="data-store"  # You can replace this with another branch dynamically if needed
+        
+        # Fetch file content from GitHub API
+        RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
+          https://api.github.com/repos/$REPO/contents/$FILE_PATH?ref=$BRANCH)
+
+        SHA=$(echo "$RESPONSE" | jq -r .sha)
+
+        if [ "$SHA" != "null" ]; then
+          echo "File found, downloading..."
+          DOWNLOAD_URL=$(echo "$RESPONSE" | jq -r .download_url)
+          curl -s -L $DOWNLOAD_URL -o $FILE_PATH
+        else
+          echo "File not found, proceeding without DB."
+        fi
 
     - name: 🕷️ Run Scraper
       run: |
@@ -80,23 +80,44 @@ jobs:
           --data "{\"text\":\"$MESSAGE\"}" \
           "$SLACK_WEBHOOK_URL"
 
-    - name: 💾 Commit updated DB to data-store branch
+    - name: 💾 Commit updated DB to data-store branch using GitHub API
       env:
         GIT_AUTH_TOKEN: ${{ secrets.GITHUBTOKEN }}
       run: |
-        git config --global user.email "actions@github.com"
-        git config --global user.name "GitHub Actions"
+        # Encode the DB file to base64
+        BASE64_DB=$(base64 -w 0 android_reports.db)
 
-        git checkout -B data-store
-        git add android_reports.db
-        git commit -m "📦 Update DB: $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+        COMMIT_MSG="📦 Update DB: $(date '+%Y-%m-%d %H:%M:%S')"
+        REPO="${{ github.repository }}"  # Get the repository dynamically
+        FILE_PATH="android_reports.db"
+        BRANCH="data-store"  # You can replace this dynamically if needed
 
-        # Use the PAT to push
-        git remote set-url origin https://x-access-token:${GIT_AUTH_TOKEN}@github.com/${{ github.repository }}
-        git push origin data-store --force
+        # Fetch the SHA if the file already exists
+        RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
+          https://api.github.com/repos/$REPO/contents/$FILE_PATH?ref=$BRANCH)
+        SHA=$(echo "$RESPONSE" | jq -r .sha)
 
+        # Create the JSON payload for the GitHub API
+        if [ "$SHA" != "null" ]; then
+          echo "File exists. Updating..."
+          JSON=$(jq -n \
+            --arg msg "$COMMIT_MSG" \
+            --arg content "$BASE64_DB" \
+            --arg branch "$BRANCH" \
+            --arg sha "$SHA" \
+            '{message: $msg, content: $content, branch: $branch, sha: $sha}')
+        else
+          echo "File does not exist. Creating..."
+          JSON=$(jq -n \
+            --arg msg "$COMMIT_MSG" \
+            --arg content "$BASE64_DB" \
+            --arg branch "$BRANCH" \
+            '{message: $msg, content: $content, branch: $branch}')
+        fi
 
-
-    - name: 🧹 Clean up
-      run: |
-        rm -f new-found.flag
+        # Upload the file via GitHub API
+        curl -X PUT \
+          -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
+          -H "Content-Type: application/json" \
+          -d "$JSON" \
+          https://api.github.com/repos/$REPO/contents/$FILE_PATH

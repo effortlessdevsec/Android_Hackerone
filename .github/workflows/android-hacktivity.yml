@@ -71,6 +71,13 @@ jobs:
                            '{message: $msg, content: $content, sha: $sha}')" \
             https://api.github.com/repos/${GITHUB_REPOSITORY}/contents/README.md
 
+
+      - name: Upload latest JSON as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-reports-json
+          path: android-reports.json
+
       - name: Set env var for Slack message
         if: steps.check_new.outputs.new_count != '0'
         run: |
@@ -98,8 +105,4 @@ jobs:
               ]
             }
 
-      - name: Upload latest JSON as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-reports-json
-          path: android-reports.json
+     

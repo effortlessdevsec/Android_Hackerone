@@ -113,7 +113,9 @@ jobs:
         curl -X POST -H 'Content-type: application/json' \
           --data "{\"text\":\"$MESSAGE\"}" \
           "$SLACK_WEBHOOK_URL"
-
-    
-
-        # Upload the
+          
+        curl -X PUT \
+          -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
+          -H "Content-Type: application/json" \
+          -d "$JSON" \
+          https://api.github.com/repos/$REPO/contents/$FILE_PATH

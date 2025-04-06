@@ -1,11 +1,5 @@
 [
-  {
-    "title": "Brave Android: Incorrect URL Eliding in Brave Shields Pop Up",
-    "severity": "Low",
-    "date": "September 18, 2024 16:10:44 UTC",
-    "program": "Brave Software",
-    "url": "https://hackerone.com/reports/2501378"
-  },
+ 
   {
     "title": "MetaMask Browser (on Android) does not enforce Content-Security-Policy header",
     "severity": "Medium",

@@ -13,21 +13,5 @@ jobs:
 
     - name: Postd blocks to a Slack channel
       if: always()
-      uses: slackapi/slack-github-action@v2.0.0
-      with:
-        method: chat.postMessage
-        token: ${{ secrets.WEBHOOK_URL}}
-        payload: |
-          {
-            "channel": "${{ secrets.SECURITY_SLACK_CHANNEL_ID }}",
-            "text": "hello",
-            "blocks": [
-              {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "hello"
-                }
-              }
-            ]
-          }
+      run: |
+         curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' ${{secrets.WEBHOOK_URL)

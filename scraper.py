@@ -1,16 +1,18 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 from datetime import datetime
 import tempfile
 import shutil
 import time
 import pandas as pd
+import json
+from selenium.common.exceptions import WebDriverException
 
 class HackerOneScraper:
     def __init__(self):
@@ -29,17 +31,19 @@ class HackerOneScraper:
         self.chrome_options.add_argument("--disable-dev-shm-usage")
         self.chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
 
-    def setup_driver(self):
-        try:
-            driver = webdriver.Chrome(
-                service=Service(ChromeDriverManager().install()),
-                options=self.chrome_options
-            )
-            print("Driver initialized successfully")
-            return driver
-        except Exception as e:
-            print(f"Error setting up driver: {e}")
-            return None
+    def setup_driver(self, retries=3):
+        for attempt in range(retries):
+            try:
+                driver = webdriver.Chrome(
+                    service=Service(ChromeDriverManager().install()),
+                    options=self.chrome_options
+                )
+                print("Driver initialized successfully")
+                return driver
+            except WebDriverException as e:
+                print(f"Driver setup failed (attempt {attempt+1}): {e}")
+                time.sleep(5)
+        return None
 
     def fetch_page(self, driver, is_first_page=True):
         try:
@@ -148,7 +152,7 @@ class HackerOneScraper:
                     break
         finally:
             driver.quit()
-            shutil.rmtree(self.user_data_dir)  # Clean up temp profile
+            shutil.rmtree(self.user_data_dir)
             print("Driver closed and temp data removed.")
 
         return all_results
@@ -159,8 +163,9 @@ def main():
 
     if not results:
         print("No Android reports found or error occurred during scraping")
-        return
+        return []
 
+    # Save markdown
     markdown_lines = [
         "# 📱 Disclosed Android Reports from HackerOne\n",
         f"_Generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}_\n",
@@ -180,6 +185,7 @@ def main():
         f.write("\n".join(markdown_lines))
     print(f"✅ Saved {len(results)} Android reports to 'android-reports.md'")
 
+    # Save Excel
     try:
         df = pd.DataFrame(results)
         df.index += 1
@@ -187,6 +193,16 @@ def main():
         print(f"✅ Saved {len(results)} Android reports to 'android-reports.xlsx'")
     except Exception as e:
         print(f"❌ Failed to save Excel file: {e}")
+
+    # Save JSON
+    try:
+        with open("android-reports.json", "w", encoding="utf-8") as jf:
+            json.dump(results, jf, indent=2)
+        print(f"✅ Saved {len(results)} Android reports to 'android-reports.json'")
+    except Exception as e:
+        print(f"❌ Failed to save JSON file: {e}")
+
+    return results
 
 if __name__ == "__main__":
     main()

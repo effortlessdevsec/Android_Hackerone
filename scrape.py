@@ -125,14 +125,13 @@ class HackerOneScraper:
         except Exception as e:
             print(f"❌ Failed to save JSON file: {e}")
 
-   def save_to_excel(self, data, filename="android-reports.xlsx"):
-       try:
+    def save_to_excel(self, data, filename="android-reports.xlsx"):
+        try:
             df = pd.DataFrame(data)
             df.to_excel(filename, index=False)
             print(f"✅ Saved {len(data)} Android reports to '{filename}'")
-       except Exception as e:
+        except Exception as e:
             print(f"❌ Failed to save Excel file: {e}")
-
 
     def save_to_markdown(self, data, filename="README.md"):
         try:
@@ -205,17 +204,11 @@ def main():
 
     if not results:
         print("No Android reports found or error occurred during scraping")
-        return []
+        return
 
-    # Save JSON
     scraper.save_to_json(results)
-
-    # Save markdown
     scraper.save_to_markdown(results)
     scraper.save_to_excel(results)
-
-
-    return results
 
 
 if __name__ == "__main__":

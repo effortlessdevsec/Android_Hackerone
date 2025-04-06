@@ -125,12 +125,12 @@ class HackerOneScraper:
         except Exception as e:
             print(f"❌ Failed to save JSON file: {e}")
 
-     def save_to_excel(self, data, filename="android-reports.xlsx"):
-        try:
+   def save_to_excel(self, data, filename="android-reports.xlsx"):
+       try:
             df = pd.DataFrame(data)
             df.to_excel(filename, index=False)
             print(f"✅ Saved {len(data)} Android reports to '{filename}'")
-        except Exception as e:
+       except Exception as e:
             print(f"❌ Failed to save Excel file: {e}")
 
 

@@ -53,36 +53,6 @@ jobs:
       run: |
         python scrape.py
 
-    - name: 📊 Compare with Existing Data and Check for New Vulnerabilities
-      id: compare
-      run: |
-        # Compare newly scraped vulnerabilities with the database
-        if [ -f android_reports.db ]; then
-          # Assuming the `scrape.py` adds vulnerabilities to the database (e.g., `new_reports`)
-          new_reports_count=$(sqlite3 android_reports.db "SELECT COUNT(*) FROM new_reports;")
-          echo "New vulnerabilities found: $new_reports_count"
-
-          if [ "$new_reports_count" -gt 0 ]; then
-            echo "new_data=true" >> $GITHUB_OUTPUT
-            echo "$new_reports_count" > new-found.flag
-          else
-            echo "new_data=false" >> $GITHUB_OUTPUT
-          fi
-        else
-          echo "new_data=false" >> $GITHUB_OUTPUT
-        fi
-
-    - name: 🔔 Send Slack Notification if New Vulnerabilities Found
-      if: steps.compare.outputs.new_data == 'true'
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      run: |
-        COUNT=$(cat new-found.flag)
-        MESSAGE="📱 *$COUNT* new Android vulnerability disclosures found on HackerOne!\n➡️ Check reports: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-        curl -X POST -H 'Content-type: application/json' \
-          --data "{\"text\":\"$MESSAGE\"}" \
-          "$SLACK_WEBHOOK_URL"
-
     - name: 💾 Commit updated DB to data-store branch using GitHub API
       env:
         GIT_AUTH_TOKEN: ${{ secrets.GITHUBTOKEN }}
@@ -113,5 +83,37 @@ jobs:
           --arg content "$BASE64_DB" \
           --arg branch "$BRANCH" \
           '{message: $msg, content: $content, branch: $branch}')
+
+    - name: 📊 Compare with Existing Data and Check for New Vulnerabilities
+      id: compare
+      run: |
+        # Compare newly scraped vulnerabilities with the database
+        if [ -f android_reports.db ]; then
+          # Assuming the `scrape.py` adds vulnerabilities to the database (e.g., `new_reports`)
+          new_reports_count=$(sqlite3 android_reports.db "SELECT COUNT(*) FROM new_reports;")
+          echo "New vulnerabilities found: $new_reports_count"
+
+          if [ "$new_reports_count" -gt 0 ]; then
+            echo "new_data=true" >> $GITHUB_OUTPUT
+            echo "$new_reports_count" > new-found.flag
+          else
+            echo "new_data=false" >> $GITHUB_OUTPUT
+          fi
+        else
+          echo "new_data=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: 🔔 Send Slack Notification if New Vulnerabilities Found
+      if: steps.compare.outputs.new_data == 'true'
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      run: |
+        COUNT=$(cat new-found.flag)
+        MESSAGE="📱 *$COUNT* new Android vulnerability disclosures found on HackerOne!\n➡️ Check reports: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        curl -X POST -H 'Content-type: application/json' \
+          --data "{\"text\":\"$MESSAGE\"}" \
+          "$SLACK_WEBHOOK_URL"
+
+    
 
         # Upload the

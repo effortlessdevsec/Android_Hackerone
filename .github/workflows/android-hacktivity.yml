@@ -84,6 +84,12 @@ jobs:
           --arg branch "$BRANCH" \
           '{message: $msg, content: $content, branch: $branch}')
 
+        curl -X PUT \
+          -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
+          -H "Content-Type: application/json" \
+          -d "$JSON" \
+          https://api.github.com/repos/$REPO/contents/$FILE_PATH
+
     - name: 📊 Compare with Existing Data and Check for New Vulnerabilities
       id: compare
       run: |
@@ -114,8 +120,4 @@ jobs:
           --data "{\"text\":\"$MESSAGE\"}" \
           "$SLACK_WEBHOOK_URL"
           
-        curl -X PUT \
-          -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
-          -H "Content-Type: application/json" \
-          -d "$JSON" \
-          https://api.github.com/repos/$REPO/contents/$FILE_PATH
+        

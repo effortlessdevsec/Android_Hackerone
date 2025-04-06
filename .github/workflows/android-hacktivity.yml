@@ -11,16 +11,18 @@ jobs:
 
     steps:
 
+    
+    - name: 📥 Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Needed to access all branches
+
     - name: Make script executable
       run: chmod +x ./slack_notify.sh
 
     - name: Send Slack Notification
       run: |
         WEBHOOK_URL="${{ secrets.WEBHOOK_URL }}" ./slack_notify.sh
-    - name: 📥 Checkout Repository
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0  # Needed to access all branches
 
 
 

@@ -95,42 +95,16 @@ jobs:
 
           fi
 
-    - name: Extract and Format Data from new-found.json
-      id: format_data
-      run: |
-        # Read the new-found.json file and extract relevant data for Slack message
-        NEW_VULNERABILITIES=$(cat new-found.json)
-
-        # Extract the first vulnerability data (Modify according to your actual JSON structure)
-        TITLE=$(echo "$NEW_VULNERABILITIES" | jq -r '.[0].title')
-        SEVERITY=$(echo "$NEW_VULNERABILITIES" | jq -r '.[0].severity')
-        PROGRAM=$(echo "$NEW_VULNERABILITIES" | jq -r '.[0].program')
-        DATE=$(echo "$NEW_VULNERABILITIES" | jq -r '.[0].date')
-        URL=$(echo "$NEW_VULNERABILITIES" | jq -r '.[0].url')
-
-        # Format the Slack message
-        SLACK_MESSAGE=$(cat <<EOF
-        {
-          "text": "*New Android vulnerability report*",
-          "attachments": [
-            {
-              "title": "$TITLE",
-              "text": "Severity: $SEVERITY\nProgram: $PROGRAM\nDate: $DATE\n[View Report]($URL)",
-              "color": "warning"
-            }
-          ]
-        }
-        EOF
-        )
-
-        # Set the message as an environment variable for later use
-        echo "SLACK_MESSAGE=$SLACK_MESSAGE" >> $GITHUB_ENV
-
     - name: Post blocks to a Slack channel
       run: |
-        # Post the formatted message to Slack
-        curl -X POST -H 'Content-type: application/json' --data "${{ env.SLACK_MESSAGE }}" \
-        ${{ secrets.WEBHOOK_URL }}
+        # Read new-found.json
+        NEW_VULNERABILITIES=$(cat new-found.json)
+
+        # Send the raw JSON data directly to Slack as the attachment
+        curl -X POST -H 'Content-type: application/json' --data "{
+          \"text\": \"*New Android vulnerability reports*\",\n
+          \"attachments\": [$NEW_VULNERABILITIES]
+        }" ${{ secrets.WEBHOOK_URL }}
 
     
 

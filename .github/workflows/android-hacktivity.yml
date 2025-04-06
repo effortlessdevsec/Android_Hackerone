@@ -15,6 +15,10 @@ jobs:
       with:
         fetch-depth: 0  # Needed to access all branches
 
+    - name: 🐍 listing
+      run: |
+          ls
+
     - name: 🐍 Set up Python
       uses: actions/setup-python@v5
       with:

@@ -19,7 +19,7 @@ jobs:
 
     - name: 📤 Upload sample-report.txt using curl
       env:
-        GH_TOKEN: ${{ secrets.GH_PAT }}
+        GH_TOKEN: ${{ secrets.GITHUBTOKEN }}
       run: |
         FILE_PATH="sample-report.txt"
         REPO="effortlessdevsec/Android_Hackerone"

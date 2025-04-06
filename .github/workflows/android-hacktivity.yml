@@ -29,11 +29,11 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y google-chrome-stable
 
-    - name: 📥 Fetch Existing SQLite DB from data-store branch
+    - name: 📥 Fetch Existing android-report.json from main branch (if exists)
       run: |
         REPO="${{ github.repository }}"
-        FILE_PATH="android_reports.db"
-        BRANCH="data-store"
+        FILE_PATH="android-report.json"
+        BRANCH="main"  # Push to the main branch
 
         # Fetch file content from GitHub API
         RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
@@ -46,41 +46,39 @@ jobs:
           DOWNLOAD_URL=$(echo "$RESPONSE" | jq -r .download_url)
           curl -s -L $DOWNLOAD_URL -o $FILE_PATH
         else
-          echo "File not found, proceeding without DB."
+          echo "File not found, proceeding without android-report.json."
         fi
 
     - name: 🕷️ Run Scraper
       run: |
         python scrape.py
 
-    - name: 💾 Commit updated DB to data-store branch using GitHub API
+    - name: 💾 Commit updated android-report.json to main branch using GitHub API
       env:
         GIT_AUTH_TOKEN: ${{ secrets.GITHUBTOKEN }}
       run: |
-        # Encode the DB file to base64
-        BASE64_DB=$(base64 -w 0 android_reports.db)
+        # Encode the JSON file to base64
+        BASE64_JSON=$(base64 -w 0 android-report.json)
 
-        COMMIT_MSG="📦 Update DB: $(date '+%Y-%m-%d %H:%M:%S')"
+        COMMIT_MSG="📦 Update android-report.json: $(date '+%Y-%m-%d %H:%M:%S')"
         REPO="${{ github.repository }}"
-        FILE_PATH="android_reports.db"
-        BRANCH="data-store"
+        FILE_PATH="android-report.json"
+        BRANCH="main"  # Use the main branch here
 
         # Fetch the SHA if the file already exists
         RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
           https://api.github.com/repos/$REPO/contents/$FILE_PATH?ref=$BRANCH)
         SHA=$(echo "$RESPONSE" | jq -r .sha)
 
-        # If the branch doesn't exist, create it
+        # If the file doesn't exist, create it
         if [ "$SHA" == "null" ]; then
-          echo "Branch $BRANCH does not exist. Creating..."
-          # Create the branch based on the main branch
-          git checkout -b $BRANCH origin/main
+          echo "File not found, creating new file."
         fi
 
         # Create the JSON payload for the GitHub API
         JSON=$(jq -n \
           --arg msg "$COMMIT_MSG" \
-          --arg content "$BASE64_DB" \
+          --arg content "$BASE64_JSON" \
           --arg branch "$BRANCH" \
           '{message: $msg, content: $content, branch: $branch}')
 
@@ -93,10 +91,10 @@ jobs:
     - name: 📊 Compare with Existing Data and Check for New Vulnerabilities
       id: compare
       run: |
-        # Compare newly scraped vulnerabilities with the database
-        if [ -f android_reports.db ]; then
-          # Assuming the `scrape.py` adds vulnerabilities to the database (e.g., `new_reports`)
-          new_reports_count=$(sqlite3 android_reports.db "SELECT COUNT(*) FROM new_reports;")
+        # Compare newly scraped vulnerabilities with the json data
+        if [ -f android-report.json ]; then
+          # Assuming the `scrape.py` adds vulnerabilities to the json file (e.g., `new_reports`)
+          new_reports_count=$(jq '.new_reports | length' android-report.json)
           echo "New vulnerabilities found: $new_reports_count"
 
           if [ "$new_reports_count" -gt 0 ]; then
@@ -119,5 +117,3 @@ jobs:
         curl -X POST -H 'Content-type: application/json' \
           --data "{\"text\":\"$MESSAGE\"}" \
           "$SLACK_WEBHOOK_URL"
-          
-        

@@ -1,0 +1,716 @@
+[
+  {
+    "title": "Brave Android: Incorrect URL Eliding in Brave Shields Pop Up",
+    "severity": "Low",
+    "date": "September 18, 2024 16:10:44 UTC",
+    "program": "Brave Software",
+    "url": "https://hackerone.com/reports/2501378"
+  },
+  {
+    "title": "MetaMask Browser (on Android) does not enforce Content-Security-Policy header",
+    "severity": "Medium",
+    "date": "August 27, 2024 15:02:23 UTC",
+    "program": "MetaMask",
+    "url": "https://hackerone.com/reports/1941767"
+  },
+  {
+    "title": "Path traversal in deeplink query parameter can expose any user's private info to a public directory (one click)",
+    "severity": "Medium",
+    "date": "July 9, 2024 11:01:19 UTC",
+    "program": "Basecamp",
+    "url": "https://hackerone.com/reports/2553411"
+  },
+  {
+    "title": "Navgraph confusion allows any 3p app to send and read requests from the server at app.hey.com",
+    "severity": "Medium",
+    "date": "July 9, 2024 11:01:04 UTC",
+    "program": "Basecamp",
+    "url": "https://hackerone.com/reports/2552879"
+  },
+  {
+    "title": "Incorrect Deep-link validation leading to unresponsive application and device",
+    "severity": "Medium",
+    "date": "July 6, 2024 00:18:42 UTC",
+    "program": "Flickr",
+    "url": "https://hackerone.com/reports/1157795"
+  },
+  {
+    "title": "Account Takeover / Arbitrary File read and deletion / Partial code execution (intent redirection)",
+    "severity": "High",
+    "date": "June 28, 2024 17:33:02 UTC",
+    "program": "MercadoLibre",
+    "url": "https://hackerone.com/reports/2289836"
+  },
+  {
+    "title": "Account takeover via insecure intent handling",
+    "severity": "Medium",
+    "date": "May 30, 2024 14:52:23 UTC",
+    "program": "Basecamp",
+    "url": "https://hackerone.com/reports/2516732"
+  },
+  {
+    "title": "Lynxview JS interfaces Takeover via deeplink traversal",
+    "severity": "High",
+    "date": "May 24, 2024 23:47:40 UTC",
+    "program": "TikTok",
+    "url": "https://hackerone.com/reports/2417516"
+  },
+  {
+    "title": "Intent Leads To Unauthorised Video Call Initiation Leaking Surrounding Informations Of Victim",
+    "severity": "Medium",
+    "date": "April 5, 2024 18:36:36 UTC",
+    "program": "Snapchat",
+    "url": "https://hackerone.com/reports/2139260"
+  },
+  {
+    "title": "Stored XSS on LinkedIn App via iframe tag in Article",
+    "severity": "Critical",
+    "date": "February 28, 2024 07:00:21 UTC",
+    "program": "LinkedIn",
+    "url": "https://hackerone.com/reports/2212950"
+  },
+  {
+    "title": "Path traversal allows tricking the Talk Android app into writing files into it's root directory",
+    "severity": "Medium",
+    "date": "N/A",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/1997029"
+  },
+  {
+    "title": "Bypass for forced re-authentication upon biometrics change",
+    "severity": "Medium",
+    "date": "July 19, 2023 10:47:50 UTC",
+    "program": "Bitwarden",
+    "url": "https://hackerone.com/reports/1929915"
+  },
+  {
+    "title": "Open redirect due to scanning QR code via brave browser",
+    "severity": "High",
+    "date": "June 8, 2023 04:52:38 UTC",
+    "program": "Brave Software",
+    "url": "https://hackerone.com/reports/1946534"
+  },
+  {
+    "title": "Arbitrary write in the application's data folder and arbitrary read of server's replies from 3rd party apps.",
+    "severity": "High",
+    "date": "June 7, 2023 15:06:10 UTC",
+    "program": "Basecamp",
+    "url": "https://hackerone.com/reports/1710541"
+  },
+  {
+    "title": "App pin of the Android app can be bypassed via 3rdparty apps generating deep links",
+    "severity": "Low",
+    "date": "May 4, 2023 08:22:34 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/1825679"
+  },
+  {
+    "title": "GitHub Security Lab (GHSL) Vulnerability Report: SQLInjection in FileContentProvider.kt (GHSL-2022-059)",
+    "severity": "Medium",
+    "date": "April 12, 2023 14:59:43 UTC",
+    "program": "ownCloud",
+    "url": "https://hackerone.com/reports/1650264"
+  },
+  {
+    "title": "UXss on brave browser via scan QR Code",
+    "severity": "High",
+    "date": "April 11, 2023 21:04:29 UTC",
+    "program": "Brave Software",
+    "url": "https://hackerone.com/reports/1884042"
+  },
+  {
+    "title": "IDOR for changing privacy settings on any memories",
+    "severity": "High",
+    "date": "January 27, 2023 17:20:18 UTC",
+    "program": "TikTok",
+    "url": "https://hackerone.com/reports/1733627"
+  },
+  {
+    "title": "Any user can vote on `Friend Only` video pull",
+    "severity": "Low",
+    "date": "January 27, 2023 00:46:12 UTC",
+    "program": "TikTok",
+    "url": "https://hackerone.com/reports/1793940"
+  },
+  {
+    "title": "1 click Account takeover via deeplink in [com.kayak.android]",
+    "severity": "Critical",
+    "date": "January 19, 2023 16:31:15 UTC",
+    "program": "KAYAK",
+    "url": "https://hackerone.com/reports/1667998"
+  },
+  {
+    "title": "GitHub Security Lab (GHSL) Vulnerability Report: Insufficient path validation in ReceiveExternalFilesActivity.java (GHSL-2022-060)",
+    "severity": "Low",
+    "date": "January 16, 2023 16:18:07 UTC",
+    "program": "ownCloud",
+    "url": "https://hackerone.com/reports/1650270"
+  },
+  {
+    "title": "Passcode bypass on Talk Android app",
+    "severity": "Low",
+    "date": "N/A",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/1784645"
+  },
+  {
+    "title": "Talk Android broadcast receiver is not protected by broadcastPermission allowing malicious apps to communicate",
+    "severity": "Low",
+    "date": "December 25, 2022 11:23:57 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/1596459"
+  },
+  {
+    "title": "Business Suite \"Get Leads\" Resulting in Revealing User Email & Phone",
+    "severity": "High",
+    "date": "November 10, 2022 23:41:50 UTC",
+    "program": "TikTok",
+    "url": "https://hackerone.com/reports/1744194"
+  },
+  {
+    "title": "Subdomain Takeover via Unclaimed Amazon S3 Bucket (Musical.ly)",
+    "severity": "Low",
+    "date": "November 7, 2022 21:34:20 UTC",
+    "program": "TikTok",
+    "url": "https://hackerone.com/reports/1102537"
+  },
+  {
+    "title": "com.basecamp.bc3 Webview Javascript Injection and JS bridge takeover",
+    "severity": "High",
+    "date": "September 23, 2022 09:33:57 UTC",
+    "program": "Basecamp",
+    "url": "https://hackerone.com/reports/1343300"
+  },
+  {
+    "title": "Access to arbitrary file of the Nextcloud Android app from within the Nextcloud Android app",
+    "severity": "Low",
+    "date": "September 11, 2022 11:41:13 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/1408692"
+  },
+  {
+    "title": "Can use the Reddit android app as usual even though revoking the access of it from reddit.com",
+    "severity": "Critical",
+    "date": "July 16, 2022 11:10:56 UTC",
+    "program": "Reddit",
+    "url": "https://hackerone.com/reports/1632186"
+  },
+  {
+    "title": "Notification implicit PendingIntent in com.nextcloud.client allows to access contacts",
+    "severity": "Low",
+    "date": "May 27, 2022 07:23:00 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/1161401"
+  },
+  {
+    "title": "[com.exness.android.pa Android] Universal XSS in webview. Lead to steal user cookies",
+    "severity": "Low",
+    "date": "May 24, 2022 15:24:17 UTC",
+    "program": "EXNESS",
+    "url": "https://hackerone.com/reports/532836"
+  },
+  {
+    "title": "Sensitive files/ data exists  post deletion of user account",
+    "severity": "Low",
+    "date": "May 20, 2022 09:25:31 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/1222873"
+  },
+  {
+    "title": "One Click Account Hijacking via Unvalidated Deeplink",
+    "severity": "High",
+    "date": "May 4, 2022 22:23:33 UTC",
+    "program": "TikTok",
+    "url": "https://hackerone.com/reports/1500614"
+  },
+  {
+    "title": "com.nextcloud.client bypass the protection lock in andoid app v 3.18.1 latest version.",
+    "severity": "Low",
+    "date": "April 30, 2022 11:56:31 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/1450368"
+  },
+  {
+    "title": "Improper Implementation of SDK Allows Universal XSS in Webview Leading to Account Takeover",
+    "severity": "Low",
+    "date": "April 13, 2022 15:36:59 UTC",
+    "program": "EXNESS",
+    "url": "https://hackerone.com/reports/1455987"
+  },
+  {
+    "title": "2 click Remote Code execution in Evernote Android",
+    "severity": "High",
+    "date": "March 29, 2022 13:54:09 UTC",
+    "program": "Evernote",
+    "url": "https://hackerone.com/reports/1377748"
+  },
+  {
+    "title": "Able to steal bearer token from deep link",
+    "severity": "High",
+    "date": "March 27, 2022 18:33:05 UTC",
+    "program": "Basecamp",
+    "url": "https://hackerone.com/reports/1372667"
+  },
+  {
+    "title": "Theft of protected files on Android",
+    "severity": "Low",
+    "date": "March 17, 2022 08:42:53 UTC",
+    "program": "ownCloud",
+    "url": "https://hackerone.com/reports/1454002"
+  },
+  {
+    "title": "User files is disclosed when someone called while the screen is locked",
+    "severity": "Medium",
+    "date": "March 14, 2022 15:41:56 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/1338781"
+  },
+  {
+    "title": "Add upto 10K rupees to a wallet by paying an arbitrary amount",
+    "severity": "High",
+    "date": "February 23, 2022 12:19:17 UTC",
+    "program": "Zomato",
+    "url": "https://hackerone.com/reports/1408782"
+  },
+  {
+    "title": "com.reddit.frontpage vulernable to Task Hijacking (aka StrandHogg Attack)",
+    "severity": "Medium",
+    "date": "December 13, 2021 22:48:14 UTC",
+    "program": "Reddit",
+    "url": "https://hackerone.com/reports/1325649"
+  },
+  {
+    "title": "Vulnerabilities in exported activity WebView",
+    "severity": "Medium",
+    "date": "December 13, 2021 19:30:51 UTC",
+    "program": "Shipt",
+    "url": "https://hackerone.com/reports/414101"
+  },
+  {
+    "title": "Possible to steal any protected files on Android",
+    "severity": "Medium",
+    "date": "November 15, 2021 08:40:27 UTC",
+    "program": "ownCloud",
+    "url": "https://hackerone.com/reports/377107"
+  },
+  {
+    "title": "Third party app could steal access token as well as protected files using inAppBrowser",
+    "severity": "Medium",
+    "date": "October 27, 2021 14:10:40 UTC",
+    "program": "Reddit",
+    "url": "https://hackerone.com/reports/1122177"
+  },
+  {
+    "title": "hardcoded api secret & api key in com.reddit.frontpage",
+    "severity": "Critical",
+    "date": "October 21, 2021 19:47:40 UTC",
+    "program": "Reddit",
+    "url": "https://hackerone.com/reports/1241116"
+  },
+  {
+    "title": "com.duckduckgo.mobile.android - Cache corruption",
+    "severity": "Medium",
+    "date": "September 26, 2021 23:08:52 UTC",
+    "program": "DuckDuckGo",
+    "url": "https://hackerone.com/reports/1074613"
+  },
+  {
+    "title": "DoS of LINE client for Android via message containing multiple unicode characters (0x0e & 0x0f)",
+    "severity": "Medium",
+    "date": "September 24, 2021 01:49:00 UTC",
+    "program": "LY Corporation",
+    "url": "https://hackerone.com/reports/1058383"
+  },
+  {
+    "title": "[Zomato for Business Android] Vulnerability in exported activity WebView",
+    "severity": "Medium",
+    "date": "September 23, 2021 05:56:45 UTC",
+    "program": "Zomato",
+    "url": "https://hackerone.com/reports/537670"
+  },
+  {
+    "title": "[Zomato Order] Insecure deeplink leads to sensitive information disclosure",
+    "severity": "High",
+    "date": "September 23, 2021 05:54:00 UTC",
+    "program": "Zomato",
+    "url": "https://hackerone.com/reports/532225"
+  },
+  {
+    "title": "Domain Takeover [3737signals.com]",
+    "severity": "Low",
+    "date": "August 13, 2021 18:23:32 UTC",
+    "program": "Basecamp",
+    "url": "https://hackerone.com/reports/1253926"
+  },
+  {
+    "title": "CSRF when unlocking lenses leads to lenses being forcefully installed without user interaction",
+    "severity": "Low",
+    "date": "July 29, 2021 22:33:23 UTC",
+    "program": "Snapchat",
+    "url": "https://hackerone.com/reports/1085336"
+  },
+  {
+    "title": "[Lark Android] Vulnerability in exported activity WebView",
+    "severity": "Medium",
+    "date": "July 22, 2021 22:28:09 UTC",
+    "program": "Lark Technologies",
+    "url": "https://hackerone.com/reports/694053"
+  },
+  {
+    "title": "Leak arbitrary file under nextcloud android client privacy directory",
+    "severity": "Medium",
+    "date": "July 17, 2021 10:32:36 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/1142918"
+  },
+  {
+    "title": "Theft of arbitrary files in LINE Lite client for Android",
+    "severity": "Medium",
+    "date": "July 6, 2021 15:25:26 UTC",
+    "program": "LY Corporation",
+    "url": "https://hackerone.com/reports/1094702"
+  },
+  {
+    "title": "PIN bypass",
+    "severity": "Critical",
+    "date": "June 29, 2021 20:19:24 UTC",
+    "program": "MyEtherWallet",
+    "url": "https://hackerone.com/reports/1242212"
+  },
+  {
+    "title": "Google  Maps API key stored as plain text leading to DOS and financial damage",
+    "severity": "Medium",
+    "date": "June 29, 2021 10:56:41 UTC",
+    "program": "Zenly",
+    "url": "https://hackerone.com/reports/1093667"
+  },
+  {
+    "title": "No brute force protection on web-api-cloud.acronis.com",
+    "severity": "Low",
+    "date": "June 24, 2021 08:46:26 UTC",
+    "program": "Acronis",
+    "url": "https://hackerone.com/reports/972045"
+  },
+  {
+    "title": "Firebase Database Takeover in Zego Sense Android app",
+    "severity": "High",
+    "date": "June 23, 2021 16:04:36 UTC",
+    "program": "Zego",
+    "url": "https://hackerone.com/reports/1065134"
+  },
+  {
+    "title": "Android app does not clear end to end encryption keys",
+    "severity": "Low",
+    "date": "June 16, 2021 08:57:38 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/1189168"
+  },
+  {
+    "title": "Default Nextcloud Server and Android Client leak sharee searches to Nextcloud",
+    "severity": "Low",
+    "date": "June 15, 2021 19:11:31 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/1167916"
+  },
+  {
+    "title": "Unsafe deserialization leads to token leakage in PayPal & PayPal for Business [Android]",
+    "severity": "Medium",
+    "date": "April 30, 2021 16:14:16 UTC",
+    "program": "PayPal",
+    "url": "https://hackerone.com/reports/453791"
+  },
+  {
+    "title": "Cookie steal through content Uri",
+    "severity": "Critical",
+    "date": "April 22, 2021 18:05:12 UTC",
+    "program": "Brave Software",
+    "url": "https://hackerone.com/reports/876192"
+  },
+  {
+    "title": "Multiple bugs leads to RCE on TikTok for Android",
+    "severity": "Critical",
+    "date": "March 17, 2021 17:44:31 UTC",
+    "program": "TikTok",
+    "url": "https://hackerone.com/reports/1065500"
+  },
+  {
+    "title": "Bypass SMS verification to delete TikTok account",
+    "severity": "Low",
+    "date": "December 23, 2020 03:08:09 UTC",
+    "program": "TikTok",
+    "url": "https://hackerone.com/reports/964467"
+  },
+  {
+    "title": "Unrestricted File Upload Leads to RCE on mobile.starbucks.com.sg",
+    "severity": "Critical",
+    "date": "December 9, 2020 22:14:28 UTC",
+    "program": "Starbucks",
+    "url": "https://hackerone.com/reports/1027822"
+  },
+  {
+    "title": "Absence of Token expiry leads to Unauthorized login Access",
+    "severity": "Critical",
+    "date": "December 1, 2020 00:09:45 UTC",
+    "program": "Affirm",
+    "url": "https://hackerone.com/reports/766578"
+  },
+  {
+    "title": "Path traversal in ZIP extract routine on LINE Android",
+    "severity": "Medium",
+    "date": "November 17, 2020 06:26:56 UTC",
+    "program": "LY Corporation",
+    "url": "https://hackerone.com/reports/859469"
+  },
+  {
+    "title": "Android WebViews in Twitter app are vulnerable to UXSS due to configuration and CVE-2020-6506",
+    "severity": "High",
+    "date": "September 24, 2020 19:11:25 UTC",
+    "program": "X (Formerly Twitter)",
+    "url": "https://hackerone.com/reports/906433"
+  },
+  {
+    "title": "[com.smule.autorap.*] Cloud Messaging/Push Notification service takeover due to clear-text usage of Legacy FCM Server keys in the client app",
+    "severity": "Critical",
+    "date": "August 24, 2020 19:27:09 UTC",
+    "program": "Smule",
+    "url": "https://hackerone.com/reports/789370"
+  },
+  {
+    "title": "Grammarly Keyboard for Android \"Authorization Code with PKCE\" flow implementation vulnerability that allows account takeover",
+    "severity": "Medium",
+    "date": "July 24, 2020 14:22:01 UTC",
+    "program": "Grammarly",
+    "url": "https://hackerone.com/reports/824931"
+  },
+  {
+    "title": "Hardcoded credentials in Android App",
+    "severity": "High",
+    "date": "June 22, 2020 21:15:35 UTC",
+    "program": "8x8",
+    "url": "https://hackerone.com/reports/412772"
+  },
+  {
+    "title": "Incorrect control of the trial period",
+    "severity": "Medium",
+    "date": "May 26, 2020 08:43:59 UTC",
+    "program": "Nord Security",
+    "url": "https://hackerone.com/reports/865828"
+  },
+  {
+    "title": "API - Amazon S3 bucket misconfiguration",
+    "severity": "Medium",
+    "date": "April 14, 2020 23:54:07 UTC",
+    "program": "BCM Messenger",
+    "url": "https://hackerone.com/reports/764243"
+  },
+  {
+    "title": "Insecure Storage and Overly Permissive  API Keys in Android App",
+    "severity": "Medium",
+    "date": "April 12, 2020 18:32:21 UTC",
+    "program": "Zenly",
+    "url": "https://hackerone.com/reports/753868"
+  },
+  {
+    "title": "IDOR leading to downloading of any attachment",
+    "severity": "Low",
+    "date": "April 11, 2020 09:00:27 UTC",
+    "program": "BCM Messenger",
+    "url": "https://hackerone.com/reports/668439"
+  },
+  {
+    "title": "User account compromised authentication bypass via oauth token impersonation",
+    "severity": "High",
+    "date": "March 20, 2020 08:31:36 UTC",
+    "program": "Picsart",
+    "url": "https://hackerone.com/reports/739321"
+  },
+  {
+    "title": "Improper protection of FileContentProvider",
+    "severity": "Low",
+    "date": "March 1, 2020 14:05:16 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/331302"
+  },
+  {
+    "title": "Android content provider exposes password-protected share password hashes",
+    "severity": "Low",
+    "date": "January 31, 2020 16:18:03 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/242727"
+  },
+  {
+    "title": "open Firebase Database: msdict-dev.firebaseio.com",
+    "severity": "Medium",
+    "date": "January 20, 2020 11:47:59 UTC",
+    "program": "MobiSystems Ltd.",
+    "url": "https://hackerone.com/reports/736283"
+  },
+  {
+    "title": "Starbucks China Android app cloud storage service leaks a credential.",
+    "severity": "High",
+    "date": "September 30, 2019 18:32:32 UTC",
+    "program": "Starbucks",
+    "url": "https://hackerone.com/reports/440629"
+  },
+  {
+    "title": "Passcode Protection in Android Devices Can be Bypassed.",
+    "severity": "Medium",
+    "date": "August 27, 2019 07:27:27 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/631206"
+  },
+  {
+    "title": "Bypass of biometrics security functionality is possible in Android application (com.shopify.mobile)",
+    "severity": "Low",
+    "date": "August 14, 2019 13:08:47 UTC",
+    "program": "Shopify",
+    "url": "https://hackerone.com/reports/637194"
+  },
+  {
+    "title": "SQLi allow query restriction bypass on exposed FileContentProvider",
+    "severity": "Low",
+    "date": "July 29, 2019 08:35:04 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/518669"
+  },
+  {
+    "title": "Able to bypass \"Device credentials\" Lock",
+    "severity": "Low",
+    "date": "July 26, 2019 07:47:27 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/507172"
+  },
+  {
+    "title": "Combination of content provider allows private data disclosure",
+    "severity": "Low",
+    "date": "July 26, 2019 07:44:50 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/534541"
+  },
+  {
+    "title": "Bypassing lock protection",
+    "severity": "Low",
+    "date": "July 26, 2019 07:42:20 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/490946"
+  },
+  {
+    "title": "SQL Injection found in NextCloud Android App Content Provider",
+    "severity": "Low",
+    "date": "July 26, 2019 07:36:53 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/291764"
+  },
+  {
+    "title": "Extremly simple way to bypass Nextcloud-Client PIN/Fingerprint lock",
+    "severity": "Low",
+    "date": "July 26, 2019 07:24:06 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/331489"
+  },
+  {
+    "title": "Predictable Random Number Generator",
+    "severity": "Medium",
+    "date": "June 26, 2019 15:34:05 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/504731"
+  },
+  {
+    "title": "Retrieval and alteration of exposed media on Android Oreo",
+    "severity": "Medium",
+    "date": "June 26, 2019 15:32:46 UTC",
+    "program": "Nextcloud",
+    "url": "https://hackerone.com/reports/462441"
+  },
+  {
+    "title": "Grammarly Keyboard for Android <4.1  leaks user input through logs (except for sensitive input fields)",
+    "severity": "Low",
+    "date": "June 3, 2019 15:36:44 UTC",
+    "program": "Grammarly",
+    "url": "https://hackerone.com/reports/462416"
+  },
+  {
+    "title": "Protected Tweets setting overridden by Android app",
+    "severity": "Low",
+    "date": "May 17, 2019 18:08:02 UTC",
+    "program": "X (Formerly Twitter)",
+    "url": "https://hackerone.com/reports/519059"
+  },
+  {
+    "title": "Twitter lite(Android): Vulnerable to local file steal, Javascript injection, Open redirect",
+    "severity": "Critical",
+    "date": "April 29, 2019 16:17:02 UTC",
+    "program": "X (Formerly Twitter)",
+    "url": "https://hackerone.com/reports/499348"
+  },
+  {
+    "title": "[Grab Android/iOS] Insecure deeplink leads to sensitive information disclosure",
+    "severity": "High",
+    "date": "March 15, 2019 23:41:10 UTC",
+    "program": "Grab",
+    "url": "https://hackerone.com/reports/401793"
+  },
+  {
+    "title": "[Venmo Android] Remote theft of user session",
+    "severity": "Medium",
+    "date": "February 7, 2019 23:05:45 UTC",
+    "program": "PayPal",
+    "url": "https://hackerone.com/reports/401940"
+  },
+  {
+    "title": "[PayPal Android] Remote theft of user session using push_notification_webview deeplink",
+    "severity": "Medium",
+    "date": "February 7, 2019 23:03:05 UTC",
+    "program": "PayPal",
+    "url": "https://hackerone.com/reports/424443"
+  },
+  {
+    "title": "Improper validation allows user to unlock Zomato Gold multiple times at the same restaurant within one day",
+    "severity": "Low",
+    "date": "January 28, 2019 08:06:46 UTC",
+    "program": "Zomato",
+    "url": "https://hackerone.com/reports/486629"
+  },
+  {
+    "title": "Changing email address on Twitter for Android unsets \"Protect your Tweets\"",
+    "severity": "Low",
+    "date": "January 18, 2019 16:49:29 UTC",
+    "program": "X (Formerly Twitter)",
+    "url": "https://hackerone.com/reports/472013"
+  },
+  {
+    "title": "Phishing user to download malicious app could lead to leakage of User Access Token, Email, Name and Profile photo via exported RemoteService",
+    "severity": "Low",
+    "date": "September 11, 2018 04:57:13 UTC",
+    "program": "Zomato",
+    "url": "https://hackerone.com/reports/384257"
+  },
+  {
+    "title": "[IRCCloud Android] Theft of arbitrary files leading to token leakage",
+    "severity": "High",
+    "date": "November 15, 2017 15:23:32 UTC",
+    "program": "IRCCloud",
+    "url": "https://hackerone.com/reports/288955"
+  },
+  {
+    "title": "Vulnerable exported broadcast receiver",
+    "severity": "Low",
+    "date": "November 10, 2017 05:24:14 UTC",
+    "program": "Bitwarden",
+    "url": "https://hackerone.com/reports/289000"
+  },
+  {
+    "title": "[IRCCloud Android] Opening arbitrary URLs/XSS in SAMLAuthActivity",
+    "severity": "Medium",
+    "date": "November 3, 2017 11:37:05 UTC",
+    "program": "IRCCloud",
+    "url": "https://hackerone.com/reports/283058"
+  },
+  {
+    "title": "[IRCCloud Android] XSS in ImageViewerActivity",
+    "severity": "Medium",
+    "date": "November 3, 2017 11:36:14 UTC",
+    "program": "IRCCloud",
+    "url": "https://hackerone.com/reports/283063"
+  }
+]

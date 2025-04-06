@@ -22,7 +22,7 @@ jobs:
 
     - name: 📦 Install dependencies
       run: |
-        pip install selenium webdriver-manager beautifulsoup4 requests pandas 
+        pip install selenium webdriver-manager beautifulsoup4 requests pandas
 
     - name: 🧩 Install Chrome
       run: |
@@ -36,7 +36,7 @@ jobs:
         BRANCH="main"  # Push to the main branch
 
         # Fetch file content from GitHub API
-        RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
+        RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           https://api.github.com/repos/$REPO/contents/$FILE_PATH?ref=$BRANCH)
 
         SHA=$(echo "$RESPONSE" | jq -r .sha)
@@ -55,7 +55,7 @@ jobs:
 
     - name: 💾 Commit updated android-report.json to main branch using GitHub API
       env:
-        GIT_AUTH_TOKEN: ${{ secrets.GITHUBTOKEN }}
+        GIT_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         # Encode the JSON file to base64
         BASE64_JSON=$(base64 -w 0 android-report.json)
@@ -66,7 +66,7 @@ jobs:
         BRANCH="main"  # Use the main branch here
 
         # Fetch the SHA if the file already exists
-        RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
+        RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           https://api.github.com/repos/$REPO/contents/$FILE_PATH?ref=$BRANCH)
         SHA=$(echo "$RESPONSE" | jq -r .sha)
 
@@ -83,7 +83,7 @@ jobs:
           '{message: $msg, content: $content, branch: $branch}')
 
         curl -X PUT \
-          -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Content-Type: application/json" \
           -d "$JSON" \
           https://api.github.com/repos/$REPO/contents/$FILE_PATH
@@ -117,3 +117,23 @@ jobs:
         curl -X POST -H 'Content-type: application/json' \
           --data "{\"text\":\"$MESSAGE\"}" \
           "$SLACK_WEBHOOK_URL"
+
+    - name: 📜 Update README.md with Latest Report Information
+      run: |
+        DATE=$(date '+%Y-%m-%d')
+        NEW_REPORT_COUNT=$(jq '.new_reports | length' android-report.json)
+        
+        # Update README.md with the latest report information
+        echo "## Android HackerOne Reports as of $DATE" >> README.md
+        echo "### New Vulnerabilities: $NEW_REPORT_COUNT" >> README.md
+        echo "Details of the new vulnerabilities can be found in the [android-report.json](android-report.json)." >> README.md
+        echo "" >> README.md
+
+    - name: 💾 Commit updated README.md to main branch
+      env:
+        GIT_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        COMMIT_MSG="📚 Update README.md with latest Android vulnerability report: $(date '+%Y-%m-%d %H:%M:%S')"
+        git add README.md
+        git commit -m "$COMMIT_MSG"
+        git push origin main

@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import WebDriverException
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -12,7 +13,8 @@ import shutil
 import time
 import pandas as pd
 import json
-from selenium.common.exceptions import WebDriverException
+import sqlite3
+
 
 class HackerOneScraper:
     def __init__(self):
@@ -116,6 +118,43 @@ class HackerOneScraper:
 
         return results
 
+    def save_to_sqlite(self, data, db_path="android_reports.db"):
+        try:
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS reports (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    title TEXT,
+                    severity TEXT,
+                    date TEXT,
+                    program TEXT,
+                    url TEXT UNIQUE
+                )
+            """)
+
+            for report in data:
+                try:
+                    cursor.execute("""
+                        INSERT OR IGNORE INTO reports (title, severity, date, program, url)
+                        VALUES (?, ?, ?, ?, ?)
+                    """, (
+                        report['title'],
+                        report['severity'],
+                        report['date'],
+                        report['program'],
+                        report['url']
+                    ))
+                except Exception as e:
+                    print(f"Error inserting report into DB: {e}")
+
+            conn.commit()
+            conn.close()
+            print(f"✅ Saved {len(data)} Android reports to SQLite DB '{db_path}'")
+        except Exception as e:
+            print(f"❌ Failed to save to SQLite DB: {e}")
+
     def scrape(self):
         print(f"Scraping HackerOne Hacktivity for Android reports - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
@@ -156,6 +195,7 @@ class HackerOneScraper:
             print("Driver closed and temp data removed.")
 
         return all_results
+
 
 def main():
     scraper = HackerOneScraper()
@@ -202,7 +242,14 @@ def main():
     except Exception as e:
         print(f"❌ Failed to save JSON file: {e}")
 
+    # Save SQLite
+    try:
+        scraper.save_to_sqlite(results)
+    except Exception as e:
+        print(f"❌ Failed to save to SQLite: {e}")
+
     return results
+
 
 if __name__ == "__main__":
     main()

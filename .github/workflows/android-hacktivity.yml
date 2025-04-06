@@ -20,7 +20,7 @@ jobs:
 
     - name: 📦 Install dependencies
       run: |
-        pip install selenium webdriver-manager beautifulsoup4 requests
+        pip install selenium webdriver-manager beautifulsoup4 requests pandas
         
     - name: Install Chrome
       run: |

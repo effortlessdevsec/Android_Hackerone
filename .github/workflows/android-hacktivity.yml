@@ -35,24 +35,17 @@ jobs:
 
     - name: 📥 Fetch Existing android-report.json from main branch (if exists)
       run: |
-        REPO="${{ github.repository }}"
-        FILE_PATH="android-reports.json"
-        BRANCH="main"  # Push to the main branch
-
-        # Fetch file content from GitHub API
-        RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" \
-          https://api.github.com/repos/$REPO/contents/$FILE_PATH?ref=$BRANCH)
-
-        SHA=$(echo "$RESPONSE" | jq -r .sha)
-
-        if [ "$SHA" != "null" ]; then
-          echo "File found, downloading..."
-          DOWNLOAD_URL=$(echo "$RESPONSE" | jq -r .download_url)
-          curl -s -L $DOWNLOAD_URL -o $FILE_PATH
-          mv android-reports.json old-android-reports.json
+        # Check if android-report.json exists in the repository
+        if [ -f android-report.json ]; then
+          # Rename the existing file to old-android-report.json
+          mv android-report.json old-android-report.json
+          echo "Renamed existing android-report.json to old-android-report.json"
         else
-          echo "File not found, proceeding without android-report.json."
+          # Print message if file is not found
+          echo "android-report.json file not found"
         fi
+
+
 
     - name: 🕷️ Run Scraper
       run: |

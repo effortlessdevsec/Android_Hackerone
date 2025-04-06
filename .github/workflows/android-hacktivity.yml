@@ -15,6 +15,22 @@ jobs:
       with:
         fetch-depth: 0  # Needed to access all branches
 
+
+    - name: Test write
+      env:
+      GIT_AUTH_TOKEN: ${{ secrets.GITHUBTOKEN }}
+    run: |
+      git config --global user.email "actions@github.com"
+      git config --global user.name "GitHub Actions"
+  
+      echo "Hello" > test.txt
+      git checkout -B data-store
+      git add test.txt
+      git commit -m "Test commit"
+      git remote set-url origin https://x-access-token:${GIT_AUTH_TOKEN}@github.com/${{ github.repository }}
+      git push origin data-store --force
+
+
     - name: 🐍 Set up Python
       uses: actions/setup-python@v5
       with:

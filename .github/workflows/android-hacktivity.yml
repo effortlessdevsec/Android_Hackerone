@@ -44,6 +44,7 @@ jobs:
             title: .title,
             text: "Severity: \(.severity)\nProgram: \(.program)\nDate: \(.date)\n[View Report](\(.url))",
             color: "warning" }]')
+            echo $NEW_VULNERABILITIES
             if [[ "$(echo "$NEW_VULNERABILITIES" | jq length)" -gt 0 ]]; then
               # Slack webhook URL (replace with your actual webhook URL)
             

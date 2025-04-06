@@ -103,8 +103,7 @@ jobs:
           curl -s -X PUT https://api.github.com/repos/$REPO/contents/$FILE \
             -H "Authorization: token $GITHUB_TOKEN" \
             -H "Content-Type: application/json" \
-            -d @- <<EOF
-    {
+            -d @- <<EOF {
       "message": "$COMMIT_MSG",
       "content": "$BASE64_CONTENT",
       "branch": "$BRANCH",

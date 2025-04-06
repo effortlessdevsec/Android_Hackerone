@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: 📥 Checkout Repository
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Needed to access all branches
 
     - name: 🐍 Set up Python
       uses: actions/setup-python@v5
@@ -21,11 +23,16 @@ jobs:
     - name: 📦 Install dependencies
       run: |
         pip install selenium webdriver-manager beautifulsoup4 requests pandas
-        
-    - name: Install Chrome
+
+    - name: 🧩 Install Chrome
       run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
+
+    - name: 📥 Fetch Existing SQLite DB from data-store branch
+      run: |
+        git fetch origin data-store || echo "No data-store branch yet"
+        git checkout origin/data-store -- android_reports.db || echo "No existing DB file yet"
 
     - name: 🕷️ Run Scraper
       run: |
@@ -57,6 +64,15 @@ jobs:
         curl -X POST -H 'Content-type: application/json' \
           --data "{\"text\":\"$MESSAGE\"}" \
           "$SLACK_WEBHOOK_URL"
+
+    - name: 💾 Commit updated DB to data-store branch
+      run: |
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions"
+        git checkout -B data-store
+        git add android_reports.db
+        git commit -m "📦 Update DB: $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+        git push origin data-store --force
 
     - name: 🧹 Clean up
       run: |

@@ -95,49 +95,44 @@ jobs:
 
           fi
 
-    - name: Set Message Environment Variable
-      id: set_message
+    - name: Extract and Format Data from new-found.json
+      id: format_data
       run: |
+        # Read the new-found.json file and extract relevant data for Slack message
         NEW_VULNERABILITIES=$(cat new-found.json)
-        COUNT=$(echo "$NEW_VULNERABILITIES" | jq length)
-    
-        MESSAGE="📱 *$COUNT* new Android vulnerability disclosures found on HackerOne!%0A"
-        
-        for row in $(echo "$NEW_VULNERABILITIES" | jq -r '.[] | @base64'); do
-            _title=$(echo $row | base64 --decode | jq -r '.title')
-            _program=$(echo $row | base64 --decode | jq -r '.program')
-            _url=$(echo $row | base64 --decode | jq -r '.url')
-            _severity=$(echo $row | base64 --decode | jq -r '.severity')
-            _date=$(echo $row | base64 --decode | jq -r '.date')
-            
-            MESSAGE="$MESSAGE%0A*Title*: $_title%0A*Program*: $_program%0A*URL*: $_url%0A*Severity*: $_severity%0A*Date*: $_date%0A"
-        done
-    
-        echo "message=$MESSAGE" >> $GITHUB_ENV
+
+        # Extract the first vulnerability data (Modify according to your actual JSON structure)
+        TITLE=$(echo "$NEW_VULNERABILITIES" | jq -r '.[0].title')
+        SEVERITY=$(echo "$NEW_VULNERABILITIES" | jq -r '.[0].severity')
+        PROGRAM=$(echo "$NEW_VULNERABILITIES" | jq -r '.[0].program')
+        DATE=$(echo "$NEW_VULNERABILITIES" | jq -r '.[0].date')
+        URL=$(echo "$NEW_VULNERABILITIES" | jq -r '.[0].url')
+
+        # Format the Slack message
+        SLACK_MESSAGE=$(cat <<EOF
+        {
+          "text": "*New Android vulnerability report*",
+          "attachments": [
+            {
+              "title": "$TITLE",
+              "text": "Severity: $SEVERITY\nProgram: $PROGRAM\nDate: $DATE\n[View Report]($URL)",
+              "color": "warning"
+            }
+          ]
+        }
+        EOF
+        )
+
+        # Set the message as an environment variable for later use
+        echo "SLACK_MESSAGE=$SLACK_MESSAGE" >> $GITHUB_ENV
 
     - name: Post blocks to a Slack channel
-      if: always()
-      uses: slackapi/slack-github-action@v2.0.0
-      with:
-        method: chat.postMessage
-        token: ${{ secrets.WEBHOOK_URL}}
-        payload: |
-          {
-            "channel": "${{ secrets.SECURITY_SLACK_CHANNEL_ID }}",
-            "text": "hackaerone Result for ${{ matrix.repository }}: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
-            "blocks": [
-              {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "hello"
-                }
-              }
-            ]
-          }
+      run: |
+        # Post the formatted message to Slack
+        curl -X POST -H 'Content-type: application/json' --data "${{ env.SLACK_MESSAGE }}" \
+        ${{ secrets.WEBHOOK_URL }}
 
-
-
+    
 
     - name: 💾 Commit updated android-report.json to main branch using GitHub API
       env:

@@ -465,7 +465,7 @@
     "title": "Android WebViews in Twitter app are vulnerable to UXSS due to configuration and CVE-2020-6506",
     "severity": "High",
     "date": "September 24, 2020 19:11:25 UTC",
-    "program": "X (Formerly Twitter)",
+    "program": "X / XAI",
     "url": "https://hackerone.com/reports/906433"
   },
   {
@@ -633,14 +633,14 @@
     "title": "Protected Tweets setting overridden by Android app",
     "severity": "Low",
     "date": "May 17, 2019 18:08:02 UTC",
-    "program": "X (Formerly Twitter)",
+    "program": "X / XAI",
     "url": "https://hackerone.com/reports/519059"
   },
   {
     "title": "Twitter lite(Android): Vulnerable to local file steal, Javascript injection, Open redirect",
     "severity": "Critical",
     "date": "April 29, 2019 16:17:02 UTC",
-    "program": "X (Formerly Twitter)",
+    "program": "X / XAI",
     "url": "https://hackerone.com/reports/499348"
   },
   {
@@ -675,7 +675,7 @@
     "title": "Changing email address on Twitter for Android unsets \"Protect your Tweets\"",
     "severity": "Low",
     "date": "January 18, 2019 16:49:29 UTC",
-    "program": "X (Formerly Twitter)",
+    "program": "X / XAI",
     "url": "https://hackerone.com/reports/472013"
   },
   {

@@ -1,6 +1,6 @@
 # 📱 Disclosed Android Reports from HackerOne
 
-_Generated on 2025-04-25 12:43:01_
+_Generated on 2025-04-26 12:38:45_
 
 | # | Title | Severity | Date | Program | URL |
 |---|-------|----------|------|---------|-----|
@@ -70,7 +70,7 @@ _Generated on 2025-04-25 12:43:01_
 | 64 | Unrestricted File Upload Leads to RCE on mobile.starbucks.com.sg | Critical | December 9, 2020 22:14:28 UTC | Starbucks | [Link](https://hackerone.com/reports/1027822) |
 | 65 | Absence of Token expiry leads to Unauthorized login Access | Critical | December 1, 2020 00:09:45 UTC | Affirm | [Link](https://hackerone.com/reports/766578) |
 | 66 | Path traversal in ZIP extract routine on LINE Android | Medium | November 17, 2020 06:26:56 UTC | LY Corporation | [Link](https://hackerone.com/reports/859469) |
-| 67 | Android WebViews in Twitter app are vulnerable to UXSS due to configuration and CVE-2020-6506 | High | September 24, 2020 19:11:25 UTC | X / XAI | [Link](https://hackerone.com/reports/906433) |
+| 67 | Android WebViews in Twitter app are vulnerable to UXSS due to configuration and CVE-2020-6506 | High | September 24, 2020 19:11:25 UTC | X / xAI | [Link](https://hackerone.com/reports/906433) |
 | 68 | [com.smule.autorap.*] Cloud Messaging/Push Notification service takeover due to clear-text usage of Legacy FCM Server keys in the client app | Critical | August 24, 2020 19:27:09 UTC | Smule | [Link](https://hackerone.com/reports/789370) |
 | 69 | Grammarly Keyboard for Android "Authorization Code with PKCE" flow implementation vulnerability that allows account takeover | Medium | July 24, 2020 14:22:01 UTC | Grammarly | [Link](https://hackerone.com/reports/824931) |
 | 70 | Hardcoded credentials in Android App | High | June 22, 2020 21:15:35 UTC | 8x8 | [Link](https://hackerone.com/reports/412772) |
@@ -94,13 +94,13 @@ _Generated on 2025-04-25 12:43:01_
 | 88 | Predictable Random Number Generator | Medium | June 26, 2019 15:34:05 UTC | Nextcloud | [Link](https://hackerone.com/reports/504731) |
 | 89 | Retrieval and alteration of exposed media on Android Oreo | Medium | June 26, 2019 15:32:46 UTC | Nextcloud | [Link](https://hackerone.com/reports/462441) |
 | 90 | Grammarly Keyboard for Android <4.1  leaks user input through logs (except for sensitive input fields) | Low | June 3, 2019 15:36:44 UTC | Grammarly | [Link](https://hackerone.com/reports/462416) |
-| 91 | Protected Tweets setting overridden by Android app | Low | May 17, 2019 18:08:02 UTC | X / XAI | [Link](https://hackerone.com/reports/519059) |
-| 92 | Twitter lite(Android): Vulnerable to local file steal, Javascript injection, Open redirect | Critical | April 29, 2019 16:17:02 UTC | X / XAI | [Link](https://hackerone.com/reports/499348) |
+| 91 | Protected Tweets setting overridden by Android app | Low | May 17, 2019 18:08:02 UTC | X / xAI | [Link](https://hackerone.com/reports/519059) |
+| 92 | Twitter lite(Android): Vulnerable to local file steal, Javascript injection, Open redirect | Critical | April 29, 2019 16:17:02 UTC | X / xAI | [Link](https://hackerone.com/reports/499348) |
 | 93 | [Grab Android/iOS] Insecure deeplink leads to sensitive information disclosure | High | March 15, 2019 23:41:10 UTC | Grab | [Link](https://hackerone.com/reports/401793) |
 | 94 | [Venmo Android] Remote theft of user session | Medium | February 7, 2019 23:05:45 UTC | PayPal | [Link](https://hackerone.com/reports/401940) |
 | 95 | [PayPal Android] Remote theft of user session using push_notification_webview deeplink | Medium | February 7, 2019 23:03:05 UTC | PayPal | [Link](https://hackerone.com/reports/424443) |
 | 96 | Improper validation allows user to unlock Zomato Gold multiple times at the same restaurant within one day | Low | January 28, 2019 08:06:46 UTC | Zomato | [Link](https://hackerone.com/reports/486629) |
-| 97 | Changing email address on Twitter for Android unsets "Protect your Tweets" | Low | January 18, 2019 16:49:29 UTC | X / XAI | [Link](https://hackerone.com/reports/472013) |
+| 97 | Changing email address on Twitter for Android unsets "Protect your Tweets" | Low | January 18, 2019 16:49:29 UTC | X / xAI | [Link](https://hackerone.com/reports/472013) |
 | 98 | Phishing user to download malicious app could lead to leakage of User Access Token, Email, Name and Profile photo via exported RemoteService | Low | September 11, 2018 04:57:13 UTC | Zomato | [Link](https://hackerone.com/reports/384257) |
 | 99 | [IRCCloud Android] Theft of arbitrary files leading to token leakage | High | November 15, 2017 15:23:32 UTC | IRCCloud | [Link](https://hackerone.com/reports/288955) |
 | 100 | Vulnerable exported broadcast receiver | Low | November 10, 2017 05:24:14 UTC | Bitwarden | [Link](https://hackerone.com/reports/289000) |

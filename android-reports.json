@@ -280,13 +280,6 @@
     "url": "https://hackerone.com/reports/1325649"
   },
   {
-    "title": "Vulnerabilities in exported activity WebView",
-    "severity": "Medium",
-    "date": "December 13, 2021 19:30:51 UTC",
-    "program": "Shipt",
-    "url": "https://hackerone.com/reports/414101"
-  },
-  {
     "title": "Possible to steal any protected files on Android",
     "severity": "Medium",
     "date": "November 15, 2021 08:40:27 UTC",

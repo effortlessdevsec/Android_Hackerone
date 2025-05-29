@@ -1,6 +1,6 @@
 # 📱 Disclosed Android Reports from HackerOne
 
-_Generated on 2025-05-28 12:46:49_
+_Generated on 2025-05-29 12:45:11_
 
 | # | Title | Severity | Date | Program | URL |
 |---|-------|----------|------|---------|-----|
@@ -72,7 +72,7 @@ _Generated on 2025-05-28 12:46:49_
 | 66 | Android WebViews in Twitter app are vulnerable to UXSS due to configuration and CVE-2020-6506 | High | September 24, 2020 19:11:25 UTC | X / xAI | [Link](https://hackerone.com/reports/906433) |
 | 67 | [com.smule.autorap.*] Cloud Messaging/Push Notification service takeover due to clear-text usage of Legacy FCM Server keys in the client app | Critical | August 24, 2020 19:27:09 UTC | Smule | [Link](https://hackerone.com/reports/789370) |
 | 68 | Grammarly Keyboard for Android "Authorization Code with PKCE" flow implementation vulnerability that allows account takeover | Medium | July 24, 2020 14:22:01 UTC | Grammarly | [Link](https://hackerone.com/reports/824931) |
-| 69 | Hardcoded credentials in Android App | High | June 22, 2020 21:15:35 UTC | 8x8 | [Link](https://hackerone.com/reports/412772) |
+| 69 | Hardcoded credentials in Android App | High | June 22, 2020 21:15:35 UTC | 8x8 Bounty | [Link](https://hackerone.com/reports/412772) |
 | 70 | Incorrect control of the trial period | Medium | May 26, 2020 08:43:59 UTC | Nord Security | [Link](https://hackerone.com/reports/865828) |
 | 71 | API - Amazon S3 bucket misconfiguration | Medium | April 14, 2020 23:54:07 UTC | BCM Messenger | [Link](https://hackerone.com/reports/764243) |
 | 72 | Insecure Storage and Overly Permissive  API Keys in Android App | Medium | April 12, 2020 18:32:21 UTC | Zenly | [Link](https://hackerone.com/reports/753868) |

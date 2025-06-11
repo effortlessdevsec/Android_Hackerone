@@ -1,6 +1,6 @@
 # 📱 Disclosed Android Reports from HackerOne
 
-_Generated on 2025-06-10 12:48:10_
+_Generated on 2025-06-11 12:48:25_
 
 | # | Title | Severity | Date | Program | URL |
 |---|-------|----------|------|---------|-----|
@@ -42,15 +42,15 @@ _Generated on 2025-06-10 12:48:10_
 | 36 | Able to steal bearer token from deep link | High | March 27, 2022 18:33:05 UTC | Basecamp | [Link](https://hackerone.com/reports/1372667) |
 | 37 | Theft of protected files on Android | Low | March 17, 2022 08:42:53 UTC | ownCloud | [Link](https://hackerone.com/reports/1454002) |
 | 38 | User files is disclosed when someone called while the screen is locked | Medium | March 14, 2022 15:41:56 UTC | Nextcloud | [Link](https://hackerone.com/reports/1338781) |
-| 39 | Add upto 10K rupees to a wallet by paying an arbitrary amount | High | February 23, 2022 12:19:17 UTC | Zomato | [Link](https://hackerone.com/reports/1408782) |
+| 39 | Add upto 10K rupees to a wallet by paying an arbitrary amount | High | February 23, 2022 12:19:17 UTC | Eternal | [Link](https://hackerone.com/reports/1408782) |
 | 40 | com.reddit.frontpage vulernable to Task Hijacking (aka StrandHogg Attack) | Medium | December 13, 2021 22:48:14 UTC | Reddit | [Link](https://hackerone.com/reports/1325649) |
 | 41 | Possible to steal any protected files on Android | Medium | November 15, 2021 08:40:27 UTC | ownCloud | [Link](https://hackerone.com/reports/377107) |
 | 42 | Third party app could steal access token as well as protected files using inAppBrowser | Medium | October 27, 2021 14:10:40 UTC | Reddit | [Link](https://hackerone.com/reports/1122177) |
 | 43 | hardcoded api secret & api key in com.reddit.frontpage | Critical | October 21, 2021 19:47:40 UTC | Reddit | [Link](https://hackerone.com/reports/1241116) |
 | 44 | com.duckduckgo.mobile.android - Cache corruption | Medium | September 26, 2021 23:08:52 UTC | DuckDuckGo | [Link](https://hackerone.com/reports/1074613) |
 | 45 | DoS of LINE client for Android via message containing multiple unicode characters (0x0e & 0x0f) | Medium | September 24, 2021 01:49:00 UTC | LY Corporation | [Link](https://hackerone.com/reports/1058383) |
-| 46 | [Zomato for Business Android] Vulnerability in exported activity WebView | Medium | September 23, 2021 05:56:45 UTC | Zomato | [Link](https://hackerone.com/reports/537670) |
-| 47 | [Zomato Order] Insecure deeplink leads to sensitive information disclosure | High | September 23, 2021 05:54:00 UTC | Zomato | [Link](https://hackerone.com/reports/532225) |
+| 46 | [Zomato for Business Android] Vulnerability in exported activity WebView | Medium | September 23, 2021 05:56:45 UTC | Eternal | [Link](https://hackerone.com/reports/537670) |
+| 47 | [Zomato Order] Insecure deeplink leads to sensitive information disclosure | High | September 23, 2021 05:54:00 UTC | Eternal | [Link](https://hackerone.com/reports/532225) |
 | 48 | Domain Takeover [3737signals.com] | Low | August 13, 2021 18:23:32 UTC | Basecamp | [Link](https://hackerone.com/reports/1253926) |
 | 49 | CSRF when unlocking lenses leads to lenses being forcefully installed without user interaction | Low | July 29, 2021 22:33:23 UTC | Snapchat | [Link](https://hackerone.com/reports/1085336) |
 | 50 | [Lark Android] Vulnerability in exported activity WebView | Medium | July 22, 2021 22:28:09 UTC | Lark Technologies | [Link](https://hackerone.com/reports/694053) |
@@ -98,9 +98,9 @@ _Generated on 2025-06-10 12:48:10_
 | 92 | [Grab Android/iOS] Insecure deeplink leads to sensitive information disclosure | High | March 15, 2019 23:41:10 UTC | Grab | [Link](https://hackerone.com/reports/401793) |
 | 93 | [Venmo Android] Remote theft of user session | Medium | February 7, 2019 23:05:45 UTC | PayPal | [Link](https://hackerone.com/reports/401940) |
 | 94 | [PayPal Android] Remote theft of user session using push_notification_webview deeplink | Medium | February 7, 2019 23:03:05 UTC | PayPal | [Link](https://hackerone.com/reports/424443) |
-| 95 | Improper validation allows user to unlock Zomato Gold multiple times at the same restaurant within one day | Low | January 28, 2019 08:06:46 UTC | Zomato | [Link](https://hackerone.com/reports/486629) |
+| 95 | Improper validation allows user to unlock Zomato Gold multiple times at the same restaurant within one day | Low | January 28, 2019 08:06:46 UTC | Eternal | [Link](https://hackerone.com/reports/486629) |
 | 96 | Changing email address on Twitter for Android unsets "Protect your Tweets" | Low | January 18, 2019 16:49:29 UTC | X / xAI | [Link](https://hackerone.com/reports/472013) |
-| 97 | Phishing user to download malicious app could lead to leakage of User Access Token, Email, Name and Profile photo via exported RemoteService | Low | September 11, 2018 04:57:13 UTC | Zomato | [Link](https://hackerone.com/reports/384257) |
+| 97 | Phishing user to download malicious app could lead to leakage of User Access Token, Email, Name and Profile photo via exported RemoteService | Low | September 11, 2018 04:57:13 UTC | Eternal | [Link](https://hackerone.com/reports/384257) |
 | 98 | [IRCCloud Android] Theft of arbitrary files leading to token leakage | High | November 15, 2017 15:23:32 UTC | IRCCloud | [Link](https://hackerone.com/reports/288955) |
 | 99 | Vulnerable exported broadcast receiver | Low | November 10, 2017 05:24:14 UTC | Bitwarden | [Link](https://hackerone.com/reports/289000) |
 | 100 | [IRCCloud Android] Opening arbitrary URLs/XSS in SAMLAuthActivity | Medium | November 3, 2017 11:37:05 UTC | IRCCloud | [Link](https://hackerone.com/reports/283058) |

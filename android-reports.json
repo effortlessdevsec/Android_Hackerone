@@ -269,7 +269,7 @@
     "title": "Add upto 10K rupees to a wallet by paying an arbitrary amount",
     "severity": "High",
     "date": "February 23, 2022 12:19:17 UTC",
-    "program": "Zomato",
+    "program": "Eternal",
     "url": "https://hackerone.com/reports/1408782"
   },
   {
@@ -318,14 +318,14 @@
     "title": "[Zomato for Business Android] Vulnerability in exported activity WebView",
     "severity": "Medium",
     "date": "September 23, 2021 05:56:45 UTC",
-    "program": "Zomato",
+    "program": "Eternal",
     "url": "https://hackerone.com/reports/537670"
   },
   {
     "title": "[Zomato Order] Insecure deeplink leads to sensitive information disclosure",
     "severity": "High",
     "date": "September 23, 2021 05:54:00 UTC",
-    "program": "Zomato",
+    "program": "Eternal",
     "url": "https://hackerone.com/reports/532225"
   },
   {
@@ -661,7 +661,7 @@
     "title": "Improper validation allows user to unlock Zomato Gold multiple times at the same restaurant within one day",
     "severity": "Low",
     "date": "January 28, 2019 08:06:46 UTC",
-    "program": "Zomato",
+    "program": "Eternal",
     "url": "https://hackerone.com/reports/486629"
   },
   {
@@ -675,7 +675,7 @@
     "title": "Phishing user to download malicious app could lead to leakage of User Access Token, Email, Name and Profile photo via exported RemoteService",
     "severity": "Low",
     "date": "September 11, 2018 04:57:13 UTC",
-    "program": "Zomato",
+    "program": "Eternal",
     "url": "https://hackerone.com/reports/384257"
   },
   {

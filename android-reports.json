@@ -479,7 +479,7 @@
     "title": "Hardcoded credentials in Android App",
     "severity": "High",
     "date": "June 22, 2020 21:15:35 UTC",
-    "program": "8x8 Bounty",
+    "program": "8x8",
     "url": "https://hackerone.com/reports/412772"
   },
   {

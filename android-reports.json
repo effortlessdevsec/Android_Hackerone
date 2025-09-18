@@ -1,5 +1,12 @@
 [
   {
+    "title": "Critical Information Disclosure via /talos/api/v1/files/upload",
+    "severity": "Critical",
+    "date": "September 17, 2025 19:09:12 UTC",
+    "program": "Bykea",
+    "url": "https://hackerone.com/reports/3228011"
+  },
+  {
     "title": "Brave Android: Incorrect URL Eliding in Brave Shields Pop Up",
     "severity": "Low",
     "date": "September 18, 2024 16:10:44 UTC",

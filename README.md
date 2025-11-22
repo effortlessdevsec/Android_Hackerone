@@ -1,6 +1,6 @@
 # 📱 Disclosed Android Reports from HackerOne
 
-_Generated on 2025-11-21 12:17:15_
+_Generated on 2025-11-22 12:15:12_
 
 | # | Title | Severity | Date | Program | URL |
 |---|-------|----------|------|---------|-----|
@@ -74,7 +74,7 @@ _Generated on 2025-11-21 12:17:15_
 | 68 | Path traversal in ZIP extract routine on LINE Android | Medium | November 17, 2020 06:26:56 UTC | LY Corporation | [Link](https://hackerone.com/reports/859469) |
 | 69 | Android WebViews in Twitter app are vulnerable to UXSS due to configuration and CVE-2020-6506 | High | September 24, 2020 19:11:25 UTC | X / xAI | [Link](https://hackerone.com/reports/906433) |
 | 70 | [com.smule.autorap.*] Cloud Messaging/Push Notification service takeover due to clear-text usage of Legacy FCM Server keys in the client app | Critical | August 24, 2020 19:27:09 UTC | Smule | [Link](https://hackerone.com/reports/789370) |
-| 71 | Grammarly Keyboard for Android "Authorization Code with PKCE" flow implementation vulnerability that allows account takeover | Medium | July 24, 2020 14:22:01 UTC | Grammarly | [Link](https://hackerone.com/reports/824931) |
+| 71 | Grammarly Keyboard for Android "Authorization Code with PKCE" flow implementation vulnerability that allows account takeover | Medium | July 24, 2020 14:22:01 UTC | Superhuman (formerly Grammarly) | [Link](https://hackerone.com/reports/824931) |
 | 72 | Hardcoded credentials in Android App | High | June 22, 2020 21:15:35 UTC | 8x8 | [Link](https://hackerone.com/reports/412772) |
 | 73 | Incorrect control of the trial period | Medium | May 26, 2020 08:43:59 UTC | Nord Security | [Link](https://hackerone.com/reports/865828) |
 | 74 | API - Amazon S3 bucket misconfiguration | Medium | April 14, 2020 23:54:07 UTC | BCM Messenger | [Link](https://hackerone.com/reports/764243) |
@@ -95,7 +95,7 @@ _Generated on 2025-11-21 12:17:15_
 | 89 | Extremly simple way to bypass Nextcloud-Client PIN/Fingerprint lock | Low | July 26, 2019 07:24:06 UTC | Nextcloud | [Link](https://hackerone.com/reports/331489) |
 | 90 | Predictable Random Number Generator | Medium | June 26, 2019 15:34:05 UTC | Nextcloud | [Link](https://hackerone.com/reports/504731) |
 | 91 | Retrieval and alteration of exposed media on Android Oreo | Medium | June 26, 2019 15:32:46 UTC | Nextcloud | [Link](https://hackerone.com/reports/462441) |
-| 92 | Grammarly Keyboard for Android <4.1  leaks user input through logs (except for sensitive input fields) | Low | June 3, 2019 15:36:44 UTC | Grammarly | [Link](https://hackerone.com/reports/462416) |
+| 92 | Grammarly Keyboard for Android <4.1  leaks user input through logs (except for sensitive input fields) | Low | June 3, 2019 15:36:44 UTC | Superhuman (formerly Grammarly) | [Link](https://hackerone.com/reports/462416) |
 | 93 | Protected Tweets setting overridden by Android app | Low | May 17, 2019 18:08:02 UTC | X / xAI | [Link](https://hackerone.com/reports/519059) |
 | 94 | Twitter lite(Android): Vulnerable to local file steal, Javascript injection, Open redirect | Critical | April 29, 2019 16:17:02 UTC | X / xAI | [Link](https://hackerone.com/reports/499348) |
 | 95 | [Grab Android/iOS] Insecure deeplink leads to sensitive information disclosure | High | March 15, 2019 23:41:10 UTC | Grab | [Link](https://hackerone.com/reports/401793) |

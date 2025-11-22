@@ -493,7 +493,7 @@
     "title": "Grammarly Keyboard for Android \"Authorization Code with PKCE\" flow implementation vulnerability that allows account takeover",
     "severity": "Medium",
     "date": "July 24, 2020 14:22:01 UTC",
-    "program": "Grammarly",
+    "program": "Superhuman (formerly Grammarly)",
     "url": "https://hackerone.com/reports/824931"
   },
   {
@@ -640,7 +640,7 @@
     "title": "Grammarly Keyboard for Android <4.1  leaks user input through logs (except for sensitive input fields)",
     "severity": "Low",
     "date": "June 3, 2019 15:36:44 UTC",
-    "program": "Grammarly",
+    "program": "Superhuman (formerly Grammarly)",
     "url": "https://hackerone.com/reports/462416"
   },
   {

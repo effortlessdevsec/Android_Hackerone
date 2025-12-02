@@ -1,6 +1,6 @@
 # 📱 Disclosed Android Reports from HackerOne
 
-_Generated on 2025-12-01 12:19:09_
+_Generated on 2025-12-02 12:19:36_
 
 | # | Title | Severity | Date | Program | URL |
 |---|-------|----------|------|---------|-----|
